@@ -33,7 +33,7 @@ namespace SpectreRPG
                     .Title($"[seagreen3]Well... {name} , What is your class going to be?[/]")
                     .PageSize(4)
                     .AddChoices(new[] {
-                        "[bold grey27]Warrior[/]","[bold blueviolet]Mage[/]","[bold chartreuse3]Archer[/]","> Back"
+                        "[bold grey27]Warrior[/]","[bold blueviolet]Mage[/]","[bold chartreuse3]Archer[/]","> [underline red]Back[/]"
                     }));
             if (roles == "[bold grey27]Warrior[/]")
             {
@@ -56,14 +56,15 @@ namespace SpectreRPG
                 _player.ShowStats();
             }
 
-            if (roles == "Back")
+            if (roles == "> [underline red]Back[/]")
             {
                 InputPlayerInfo();
             }
             Console.WriteLine();
             Console.ReadLine();
             AnsiConsole.Clear();
-            InputPlayerInfo();
+            Game game = new Game();
+            game.game();
             
             
             

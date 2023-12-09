@@ -2,17 +2,21 @@ Default Text =  [seagreen3]
 Names [Italic blue]
 Roles (Dependent on Role)
 
+Warrior
+
+Color = bold grey27
+Health = 120 HP
+Damage = 8 ATK
 
 Archer
 
-Color = [seagreen3]
+Color = seagreen3
 health = 100 HP
-Damage = 3 ATK
+Damage = 5 ATK
 
 
+Mage
 
-Warrior
-
-Color = 	[bold grey27]
-
-mage
+Color = bold blueviolet
+Health = 75 HP
+Damage = 10 ATK
