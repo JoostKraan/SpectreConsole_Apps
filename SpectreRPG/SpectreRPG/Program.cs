@@ -22,29 +22,54 @@ namespace SpectreRPG
             AnsiConsole.Render(_panel);
             
 
-            PlayerInfo();
+            InputPlayerInfo();
         }
-        public static void PlayerInfo()
+        public static void InputPlayerInfo()
         {
-            string name = AnsiConsole.Prompt(new TextPrompt<string>("[blue]What is your name[/]").PromptStyle("italic seagreen3"));
+            string name = AnsiConsole.Prompt(new TextPrompt<string>("[seagreen3]What is your[/][bold blue] name[/]").PromptStyle("italic blue"));
+            AnsiConsole.Clear();
             var roles = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("What is your class going to be?")
-                    .PageSize(3)
+                    .Title($"[seagreen3]Well... {name} , What is your class going to be?[/]")
+                    .PageSize(4)
                     .AddChoices(new[] {
-                        "Warrior", "Mage", "Archer"
+                        "[bold grey27]Warrior[/]","[bold blueviolet]Mage[/]","[bold chartreuse3]Archer[/]","> Back"
                     }));
-            AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold red]{roles}[/]"));
-            if (roles == "Warrior")
+            if (roles == "[bold grey27]Warrior[/]")
             {
-                _player = new Player(name, 20, 15, "Warrior",0);
+                _player = new Player(name, 120, 8, "Warrior", 0);
+                AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold grey27]{roles}[/]"));
+                _player.ShowStats();
             }
-            _player.ShowStats();
-            
-            
-            
-            AnsiConsole.WriteLine();
+           
+            if (roles == "[bold chartreuse3]Archer[/]")
+            {
+                _player = new Player(name, 100, 5, "Archer", 0);
+                AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold chartreuse3]{roles}[/]"));
+                _player.ShowStats();
+            }
+
+            if (roles == "[bold blueviolet]Mage[/]")
+            {
+                _player = new Player(name, 75, 10, "Mage", 0);
+                AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold blueviolet]{roles}[/]"));
+                _player.ShowStats();
+            }
+
+            if (roles == "Back")
+            {
+                InputPlayerInfo();
+            }
+            Console.WriteLine();
             Console.ReadLine();
+            AnsiConsole.Clear();
+            InputPlayerInfo();
+            
+            
+            
+            
+            
+            
         }
     }
 }

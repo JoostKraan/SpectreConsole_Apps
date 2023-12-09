@@ -31,13 +31,28 @@ namespace SpectreRPG
 
         public void ShowStats()
         {
-            AnsiConsole.WriteLine();
-            AnsiConsole.WriteLine($"As a {_role} these are your stats...");
-            
-            AnsiConsole.WriteLine($"Your stats : {_name}");
-            AnsiConsole.WriteLine($"Your Damage : {_atk}");
-            AnsiConsole.WriteLine($"Your HP : {_health}");
-            AnsiConsole.WriteLine($"Your XP : {_Experience}");
+            Console.WriteLine();
+            Console.WriteLine();
+            if (_role == "Warrior")
+            {
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold grey27]{_role}[/][seagreen3] these are your stats...[/]");
+            }
+
+            if (_role == "Archer")
+            {
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold chartreuse3]{_role}[/][seagreen3] these are your stats...[/]");
+            }
+
+            if (_role == "Mage")
+            {
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold purple3]{_role}[/][seagreen3] these are your stats...[/]");
+            }
+            Console.WriteLine();
+            AnsiConsole.Markup($"[red3]Damage[/] : {_atk}");
+            Console.WriteLine();
+            AnsiConsole.Markup($"[green4]HP[/] : {_health}");
+            Console.WriteLine();
+            AnsiConsole.Markup($"[blueviolet]XP[/] : {_Experience}");
         }
 
 

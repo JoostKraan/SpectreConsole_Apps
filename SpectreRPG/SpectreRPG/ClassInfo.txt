@@ -1,3 +1,8 @@
+Default Text =  [seagreen3]
+Names [Italic blue]
+Roles (Dependent on Role)
+
+
 Archer
 
 Color = [seagreen3]
@@ -8,5 +13,6 @@ Damage = 3 ATK
 
 Warrior
 
+Color = 	[bold grey27]
 
 mage
