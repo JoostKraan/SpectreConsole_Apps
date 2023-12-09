@@ -1,0 +1,12 @@
+Archer
+
+Color = [seagreen3]
+health = 100 HP
+Damage = 3 ATK
+
+
+
+Warrior
+
+
+mage
