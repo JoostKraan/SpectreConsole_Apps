@@ -14,19 +14,30 @@ namespace SpectreRPG
     public class Player
     {
         public string _name;
+        public string _color;
         private int _health;
         private int _atk;
-        private string _role;
+        private int _crit;
+        private int _defense;
+        public string _role;
         private int _Experience;
 
-
-        public Player(string name,int health, int damage, string role, int Experience)
+        public Player(string name, int health, int damage, string role, int Experience, int crit, int defense, string color)
         {
             _name = name;
             _health = health;
             _atk = damage;
             _role = role;
             _Experience = Experience;
+            _crit = crit;
+            _defense = defense;
+            _color = color;
+            
+        }
+
+        public string  ReturnRolecolor()
+        {
+            return _color;
         }
 
         public void ShowStats()
@@ -35,16 +46,19 @@ namespace SpectreRPG
             Console.WriteLine();
             if (_role == "Warrior")
             {
+                _color = "[bold grey27]";
                 AnsiConsole.Markup($"[seagreen3]As an [/][bold grey27]{_role}[/][seagreen3] these are your stats...[/]");
             }
 
             if (_role == "Archer")
             {
+                _color = "[bold chartreuse3]";
                 AnsiConsole.Markup($"[seagreen3]As an [/][bold chartreuse3]{_role}[/][seagreen3] these are your stats...[/]");
             }
 
             if (_role == "Mage")
             {
+                _color = "[bold blueviolet]";
                 AnsiConsole.Markup($"[seagreen3]As an [/][bold purple3]{_role}[/][seagreen3] these are your stats...[/]");
             }
             Console.WriteLine();
@@ -54,10 +68,5 @@ namespace SpectreRPG
             Console.WriteLine();
             AnsiConsole.Markup($"[blueviolet]XP[/] : {_Experience}");
         }
-
-
-
-
-
     }
 }

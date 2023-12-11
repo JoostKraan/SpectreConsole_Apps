@@ -1,0 +1,1 @@
+implement color into string for classes 
