@@ -2,17 +2,23 @@ Default Text =  [seagreen3]
 Names [Italic blue]
 Roles (Dependent on Role)
 
++++++++++++++++++++++++++++<|
+
 Warrior
 
 Color = bold grey27
 Health = 120 HP
 Damage = 8 ATK
+Defense = 5
+Critical chance = 3
 
 Archer
 
 Color = seagreen3
 health = 100 HP
 Damage = 5 ATK
+Defense = 1
+Critical chance = 2
 
 
 Mage
@@ -20,3 +26,17 @@ Mage
 Color = bold blueviolet
 Health = 75 HP
 Damage = 10 ATK
+Defense = 0
+Critical chance = 1
+
++++++++++++++++++++++++++++<|
+
+Enemies
+
+Goblin 
+
+Color = [darkgreen]
+Health = 12
+Damage = 3
+Defense = 0
+Critical chance = 0

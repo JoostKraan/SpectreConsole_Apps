@@ -8,35 +8,13 @@ using Spectre.Console;
 namespace SpectreRPG
 {
     public class Game
-    {   
-
-        public Enemies enemy = new Enemies("skeleton",100,20,1,3,0);
+    {
+        public Encounters encounters = new Encounters();
         public Player _player;
-        
-        public void game()
-        {
-            InputPlayerInfo();
-            enemy.audio.Play();
-            Console.WriteLine(enemy.skeletonSprite);
-            //Console.WriteLine(enemy.goblinSprite);
-            Console.WriteLine(enemy.banditSprite);
-            Console.WriteLine(enemy.spiderSprite);
-            Start();
-            
-
-            Console.ReadLine();
-        }
-
         public void Start()
         {
-            AnsiConsole.Clear();
-            AnsiConsole.Markup($"[seagreen3]As [/][italic blue]{_player._name}[/]the {_player.ReturnRolecolor()}[/]{_player._role}[seagreen3] awakens in the heart of an ancient forest on a misty morning, the whispers of a forgotten past beckon you towards a cave's entrance.[/]");
-            AnsiConsole.Markup("[seagreen3]Surrounding you are towering trees and a thick, mysterious mist that cloaks the landscape.[/]");
-            AnsiConsole.Markup("[seagreen3]Rising from a bed of moss, you feel an inexplicable connection to this mystical environment.[/]");
-            AnsiConsole.Markup("[seagreen3]The air is heavy with anticipation as you step into the darkness, guided by spectral voices that seem to call out specifically to you.[/]");
-            AnsiConsole.Markup("[seagreen3]Inside the cave, hidden chambers adorned with ancient symbols await your exploration.[/]");
-            AnsiConsole.Markup("[seagreen3]The whispers intensify, and it becomes clear that your presence here is no accident but a convergence of fate.[/]");
-            AnsiConsole.Markup($"[seagreen3]The choices made in the depths of this subterranean labyrinth, [/][italic blue]{_player._name}[/][seagreen3], will shape the course of your adventure and reveal the secrets intertwined with your destiny.[/]");
+            InputPlayerInfo();
+            GameArea();
             Console.ReadLine();
         }
 
@@ -53,21 +31,21 @@ namespace SpectreRPG
                     }));
             if (roles == "[bold grey27]Warrior[/]")
             {
-                _player = new Player(name, 120, 8, "Warrior", 0, 0, 0, "[bold grey27]");
+                _player = new Player(name, 120, 8, "[bold grey27]Warrior[/]", 0, 0, 0);
                 AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold grey27]{roles}[/]"));
                 _player.ShowStats();
             }
 
             if (roles == "[bold chartreuse3]Archer[/]")
             {
-                _player = new Player(name, 100, 5, "Archer", 0, 0, 0, "[bold chartreuse3]");
+                _player = new Player(name, 100, 5, "[bold chartreuse3]Archer[/]", 0, 0, 0);
                 AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold chartreuse3]{roles}[/]"));
                 _player.ShowStats();
             }
 
             if (roles == "[bold blueviolet]Mage[/]")
             {
-                _player = new Player(name, 75, 10, "Mage", 0, 0, 0, "[bold blueviolet]");
+                _player = new Player(name, 75, 10, "[bold blueviolet]Mage[/]", 0, 0, 0);
                 AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold blueviolet]{roles}[/]"));
                 _player.ShowStats();
             }
@@ -80,5 +58,21 @@ namespace SpectreRPG
             Console.ReadLine();
             AnsiConsole.Clear();
         }
+        public void GameArea()
+        {
+            AnsiConsole.Clear();
+            AnsiConsole.Markup($"[seagreen3]As[/][italic blue] {_player._name}[/] [seagreen3]the [/]{_player._role}[seagreen3] awakens in the heart of an ancient forest on a misty morning, the whispers of a forgotten past beckon you towards a cave's entrance.[/]");
+            AnsiConsole.Markup("[seagreen3]Surrounding you are towering trees and a thick, mysterious mist that cloaks the landscape.[/]");
+            AnsiConsole.Markup("[seagreen3]Rising from a bed of moss, you feel an inexplicable connection to this mystical environment.[/]");
+            AnsiConsole.Markup("[seagreen3]The air is heavy with anticipation as you step into the darkness, guided by spectral voices that seem to call out specifically to you.[/]");
+            AnsiConsole.Markup("[seagreen3]Inside the cave, hidden chambers adorned with ancient symbols await your exploration.[/]");
+            AnsiConsole.Markup("[seagreen3]The whispers intensify, and it becomes clear that your presence here is no accident but a convergence of fate.[/]");
+            AnsiConsole.Markup($"[seagreen3]The choices made in the depths of this subterranean labyrinth,[/][italic blue] {_player._name}[/][seagreen3], will shape the course of your adventure and reveal the secrets intertwined with your destiny.[/]");
+            Console.ReadLine();
+            encounters.StartingEncounter(_player);
+
+        }
+
+        
     }
 }

@@ -1,1 +1,3 @@
-implement color into string for classes 
+implement color into string for classes : Done
+start making encounters
+Experience gaining 
