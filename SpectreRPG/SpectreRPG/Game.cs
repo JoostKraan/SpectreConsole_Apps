@@ -70,6 +70,7 @@ namespace SpectreRPG
             AnsiConsole.Markup($"[seagreen3]The choices made in the depths of this subterranean labyrinth,[/][italic blue] {_player._name}[/][seagreen3], will shape the course of your adventure and reveal the secrets intertwined with your destiny.[/]");
             Console.ReadLine();
             encounters.StartingEncounter(_player);
+            
 
         }
 

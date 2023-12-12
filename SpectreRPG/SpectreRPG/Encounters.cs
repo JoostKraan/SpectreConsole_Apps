@@ -16,7 +16,8 @@ namespace SpectreRPG
             AnsiConsole.Markup($"[seagreen3]As [/][italic blue]{player._name}[/][seagreen3] steps into the cave, a small, shadowy figure catches their eye sitting on a boulder...[/]");
             AnsiConsole.Markup($"[seagreen3]The mysterious creature is engrossed in a task, producing a high-pitched metallic sound.[/]");
             AnsiConsole.Markup($"[seagreen3]Approaching cautiously, [/][italic blue]{player._name}[/][seagreen3] realizes the figure is a hideous looking [/][darkgreen]Goblin[/][seagreen3] meticulously counting stolen coins from innocent wanderers in the forest.[/]");
-            AnsiConsole.Markup("");
+            var interaction1 = AnsiConsole.Prompt(new TextPrompt<string>(""))
+            
         }
 
 
