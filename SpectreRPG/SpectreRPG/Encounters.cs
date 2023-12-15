@@ -20,7 +20,11 @@ namespace SpectreRPG
                 AnsiConsole.Markup("As you traverse the ancient paths, you encounter a wise old man named [italic blue]Aric the Wanderer[/]");
                 AnsiConsole.Markup(" With a knowing gaze, he senses the aura of the [purple4]EdgeBlade[/] and approaches you. ");
                 AnsiConsole.Markup("Aric reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.");
-            playerWeapon = new Weapons("EdgeBlade",10,0,0,0,2,80);
+                Inventory playerinventory = new Inventory();
+            playerWeapon = new Weapons("EdgeBlade",10,0,0,0,2,95);
+            playerinventory.AddWeapons(playerWeapon);
+            playerinventory.ShowInventory();
+            Console.ReadLine();
             Console.WriteLine();
             AnsiConsole.Markup("You've acquired a new Weapon!");
             if (player.role == "[bold blueviolet]Warlock[/]") 
