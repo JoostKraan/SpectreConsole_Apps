@@ -32,7 +32,7 @@ namespace SpectreRPG
             Console.WriteLine();
             foreach (var weapon in weaponslist)
             {
-                AnsiConsole.Markup($"Weapon :[yellow1]{weapon.name}[/]");
+                AnsiConsole.Markup($"[seagreen3]Weapon[/] :[yellow] {weapon.name}[/]");
             }
         }
 
