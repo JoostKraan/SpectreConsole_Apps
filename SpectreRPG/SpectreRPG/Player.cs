@@ -13,23 +13,23 @@ namespace SpectreRPG
 {
     public class Player
     {
-        public string _name;
-        private int _health;
-        private int _atk;
-        private int _crit;
-        private int _defense;
-        public string _role;
-        private int _Experience;
+        public string name;
+        private int health;
+        private int strenght;
+        private int defense;
+        public string role;
+        private int Experience;
+        public int dodge;
         
-        public Player(string name, int health, int damage, string role, int Experience, int crit, int defense)
+        public Player(string name, int health, int strenght, string role, int Experience, int defense)
         {
-            _name = name;
-            _health = health;
-            _atk = damage;
-            _role = role;
-            _Experience = Experience;
-            _crit = crit;
-            _defense = defense;
+            this.name = name;
+            this.health = health;
+            this.strenght = strenght;
+            this.role = role;
+            this.Experience = Experience;
+            this.defense = defense;
+            this.dodge = dodge;
             
             
         }
@@ -38,34 +38,34 @@ namespace SpectreRPG
         {
             Console.WriteLine();
             Console.WriteLine();
-            if (_role == "[bold grey27]Warrior[/]")
+            if (role == "[bold grey27]Titan[/]")
             {
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold grey27]{_role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold grey27]{role}[/][seagreen3] these are your stats currently[/]");
             }
 
-            if (_role == "[bold chartreuse3]Archer[/]")
+            if (role == "[bold chartreuse3]Rogue[/]")
             {
                 
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold chartreuse3]{_role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold chartreuse3]{role}[/][seagreen3] these are your stats currently[/]");
             }
 
-            if (_role == "[bold blueviolet]Mage[/]")
+            if (role == "[bold blueviolet]Warlock[/]")
             {
                 
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold purple3]{_role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"[seagreen3]As an [/][bold purple3]{role}[/][seagreen3] these are your stats currently[/]");
             }
             Console.WriteLine();
-            AnsiConsole.Markup($"[green4]HP[/] : {_health}");
+            AnsiConsole.Markup($"[green4]HP[/] : {health}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[red3]Damage[/] : {_atk}"); 
+            AnsiConsole.Markup($"[red3]Strenght[/] : {strenght}"); 
             Console.WriteLine();
-            AnsiConsole.Markup($"[yellow1]Critical Chance[/] : {_crit}");
+            AnsiConsole.Markup($"[grey50]Defense[/] : {defense}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[grey50]Defense[/] : {_defense}");
+            AnsiConsole.Markup($"[blueviolet]XP[/] : {Experience}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[blueviolet]XP[/] : {_Experience}");
+            AnsiConsole.Markup($"[orange4]Dodge[/] : {dodge}");
             Console.WriteLine();
-            
+
         }
     }
 }

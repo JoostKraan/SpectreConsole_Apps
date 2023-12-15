@@ -1,6 +1,7 @@
 Default Text =  [seagreen3]
-Names [Italic blue]
-Roles (Dependent on Role)
+Names = [Italic blue]
+Roles = (Dependent on Role)
+Weapon names =  [yellow1]
 
 +++++++++++++++++++++++++++<|
 
