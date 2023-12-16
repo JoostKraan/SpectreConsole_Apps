@@ -57,6 +57,7 @@ namespace SpectreRPG
             Console.ReadLine();
             AnsiConsole.Clear();
             encounters.StartingEncounter(_player);
+            
         }
 
 

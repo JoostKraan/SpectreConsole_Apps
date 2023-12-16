@@ -10,9 +10,10 @@ namespace SpectreRPG
 {
     public class Encounters
     {
-        Weapons playerWeapon;
-        public Player StartingEncounter(Player player)
+        Inventory playerinventory;
+        public void StartingEncounter(Player player)
         {
+
             AnsiConsole.Markup("[seagreen3]In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, [/]");
             Console.WriteLine();
             AnsiConsole.Markup("[yellow1]the Ancient Bladecrafter[/][seagreen3]. This legendary weapon, steeped in the history of [/][green]Eldoria[/],");
@@ -26,9 +27,12 @@ namespace SpectreRPG
             AnsiConsole.Markup("[seagreen3]With a knowing gaze, he senses the aura of the [/][purple4]EdgeBlade[/][seagreen3] and approaches you.[/] ");
             Console.WriteLine();
             AnsiConsole.Markup("[italic blue]Aric[/][seagreen3] reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.[/]");
-            Inventory playerinventory = new Inventory();
-            playerWeapon = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
-            
+            playerinventory = new Inventory();
+            Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
+            Weapons Anotherblade = new Weapons("AnotherBlade", 15, 0, 0, 0, 10, 95);
+            playerinventory.AddWeapons(Edgeblade);
+            playerinventory.AddWeapons(Anotherblade);
+
             Console.WriteLine();
             Console.ReadLine();
             Console.WriteLine();
@@ -36,7 +40,7 @@ namespace SpectreRPG
 
             string addweapon = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title($"Do you want to put {playerWeapon.name} in your inventory?")
+                .Title($"Do you want to put {Anotherblade.name} in your inventory?")
                 .PageSize(3)
                 .AddChoices(new[]
                 {
@@ -44,8 +48,12 @@ namespace SpectreRPG
                 }
                 ));
 
-            if(addweapon == "[green]Add it![/]")
-            playerinventory.AddWeapons(playerWeapon);
+            if (addweapon == "[green]Add it![/]")
+            {
+                playerinventory.AddWeapons(Edgeblade);
+                playerinventory.AddWeapons(Anotherblade);
+            }
+           
             else
             {
                 Console.WriteLine("you leave the sword and go home (Quit)");
@@ -53,11 +61,19 @@ namespace SpectreRPG
                 Environment.Exit(0);
             }
             AnsiConsole.Markup("[seagreen3]You have acquired the [/][purple4]Edgebade![/]");
-            
+
             if (player.role == "[bold blueviolet]Warlock[/]")
-                playerWeapon.PrintRangedStats();
+            {
+                Edgeblade.PrintRangedStats();
+                Anotherblade.PrintMeleeStats();
+            }
+
             else
-                playerWeapon.PrintMeleeStats();
+            {
+                Edgeblade.PrintMeleeStats();
+                Anotherblade.PrintRangedStats();
+            }
+                
             Console.ReadLine();
             Console.Clear();
             AnsiConsole.Markup("[italic blue]Aric[/][seagreen3] hands you a quest note urging you to find an elven camp in [/][green]Eldoria.[/]");
@@ -82,18 +98,18 @@ namespace SpectreRPG
             }
             
 
-            Console.WriteLine(player.ShowStats) ;
+            Encounter2(player,playerinventory);
             Console.ReadLine();
-            return player;
+            
+
         }
 
-        public Player Encounter2(Player player)
+        public void Encounter2(Player player,Inventory playerinventory)
         {
-
-            Console.WriteLine(player.ShowStats);
-            Console.WriteLine("test");
+            playerinventory.ShowInventory();
+            player.ShowStats();
             Console.ReadLine();
-            return player;
+
         }
 
 

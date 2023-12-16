@@ -14,7 +14,7 @@ namespace SpectreRPG
     public class Player
     {
         public string name;
-        private int health;
+        public int health;
         private int strenght;
         private int defense;
         public string role;
@@ -36,7 +36,7 @@ namespace SpectreRPG
 
         public void ShowStats()
         {
-            Console.WriteLine();
+            Console.WriteLine("Showing stats");
             Console.WriteLine();
             if (role == "[bold grey27]Titan[/]")
             {
