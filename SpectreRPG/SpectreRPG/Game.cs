@@ -19,7 +19,9 @@ namespace SpectreRPG
 
         public void InputPlayerInfo()
         {
-            string name = AnsiConsole.Prompt(new TextPrompt<string>("[seagreen3]What is your[/][bold blue] name[/]").PromptStyle("italic blue"));
+            string name = AnsiConsole.Prompt(new TextPrompt<string>($"{Textcolor.NormalText("What's your")}" +
+                                                                    $"{Textcolor.NameText("name?")}")
+                .PromptStyle("italic blue"));
             AnsiConsole.Clear();
             var roles = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()

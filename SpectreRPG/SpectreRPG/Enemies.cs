@@ -36,6 +36,13 @@ namespace SpectreRPG
             _crit = crit;
         
         }
+
+        public void calculateDamageTo(int attack, int critRate)
+        {
+            float test1 = (100 - _defense);
+            float damage = attack * ( test1/ 100);
+            var test = "test";
+        }
         
     }
 

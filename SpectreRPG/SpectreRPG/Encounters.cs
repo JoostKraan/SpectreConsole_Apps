@@ -29,18 +29,15 @@ namespace SpectreRPG
             AnsiConsole.Markup("[italic blue]Aric[/][seagreen3] reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.[/]");
             playerinventory = new Inventory();
             Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
-            Weapons Anotherblade = new Weapons("AnotherBlade", 15, 0, 0, 0, 10, 95);
-            playerinventory.AddWeapons(Edgeblade);
-            playerinventory.AddWeapons(Anotherblade);
-
             Console.WriteLine();
             Console.ReadLine();
             Console.WriteLine();
-            AnsiConsole.Markup("You've acquired a new Weapon!");
+            AnsiConsole.Markup("[seagreen3]You've acquired a new Weapon![/]");
+            Console.ReadLine();
 
             string addweapon = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title($"Do you want to put {Anotherblade.name} in your inventory?")
+                .Title($"[seagreen3]Do you want to put[/] [purple4]{Edgeblade.name}[/][seagreen3] in your inventory?[/]")
                 .PageSize(3)
                 .AddChoices(new[]
                 {
@@ -50,8 +47,7 @@ namespace SpectreRPG
 
             if (addweapon == "[green]Add it![/]")
             {
-                playerinventory.AddWeapons(Edgeblade);
-                playerinventory.AddWeapons(Anotherblade);
+                player.addToInventory(Edgeblade);
             }
            
             else
@@ -60,18 +56,21 @@ namespace SpectreRPG
                 Console.ReadLine() ;
                 Environment.Exit(0);
             }
-            AnsiConsole.Markup("[seagreen3]You have acquired the [/][purple4]Edgebade![/]");
+           
+            playerAcuiredWeapon(Edgeblade);
 
             if (player.role == "[bold blueviolet]Warlock[/]")
             {
                 Edgeblade.PrintRangedStats();
-                Anotherblade.PrintMeleeStats();
+                Console.WriteLine();
+                
             }
 
             else
             {
                 Edgeblade.PrintMeleeStats();
-                Anotherblade.PrintRangedStats();
+                Console.WriteLine();
+                
             }
                 
             Console.ReadLine();
@@ -82,7 +81,7 @@ namespace SpectreRPG
             Console.WriteLine();
             AnsiConsole.Markup("[seagreen3]Ready to uncover secrets?[/]");
             Console.WriteLine();
-
+            Console.WriteLine();
             string Encounter1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title($"[seagreen3]The note that[/][italic blue] Aric [/][seagreen3]handed you says to head north for 3 kilometers to find the elf camp[/]")
@@ -92,24 +91,37 @@ namespace SpectreRPG
                     }));
             if(Encounter1 == "[red]No thanks, I would rather die than find out...[/]")
             {
-                Console.WriteLine("[seagreen3]You go home and [/][italic blue]Aric[/][seagreen3] is disappointed...[/]");
+                AnsiConsole.Clear();
+                AnsiConsole.Markup("[seagreen3]You go home and [/][italic blue]Aric[/][seagreen3] is disappointed...[/]");
                 Console.ReadLine() ;
                 Environment.Exit(0);
+              
             }
-            
 
-            Encounter2(player,playerinventory);
+
+            AttackEncounter(player);
             Console.ReadLine();
             
 
         }
 
-        public void Encounter2(Player player,Inventory playerinventory)
+        public void AttackEncounter(Player player)
         {
-            playerinventory.ShowInventory();
-            player.ShowStats();
-            Console.ReadLine();
+            AnsiConsole.Markup("[seagreen3]As you start your little journey to the camp you walk into a dark forest.[/]");
+            AnsiConsole.Markup("[seagreen3]You follow the path which leads to the elven camp for your quest...[/]");
+            AnsiConsole.Markup("[seagreen3]When following the path you hear footsteps coming closer and closer[/]");
+            AnsiConsole.Markup("[seagreen3]Before you know it there is a Duo of [/][green]globins[/][seagreen3] standing infront of you![/]");
+            AnsiConsole.Markup("");
+            var test = new Enemies("Shrek", 10, 10, 10, 1, 10);
+            test.calculateDamageTo(player.strength , 0);
 
+
+        }
+
+        private void playerAcuiredWeapon(Weapons weapon)
+        {
+            AnsiConsole.Markup($"[seagreen3]You have acquired the [/][purple4]{weapon.name}[/]");
+            Console.WriteLine();
         }
 
 

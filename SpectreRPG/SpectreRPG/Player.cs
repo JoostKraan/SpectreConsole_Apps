@@ -15,28 +15,31 @@ namespace SpectreRPG
     {
         public string name;
         public int health;
-        private int strenght;
+        public int strength;
         private int defense;
         public string role;
         private int Experience;
         public int dodge;
+        private Inventory playerInventory;
         
-        public Player(string name, int health, int strenght, string role, int Experience, int defense)
+        public Player(string name, int health, int strength, string role, int Experience, int defense)
         {
             this.name = name;
             this.health = health;
-            this.strenght = strenght;
+            this.strength = strength;
             this.role = role;
             this.Experience = Experience;
             this.defense = defense;
             this.dodge = dodge;
-            
-            
+            this.playerInventory = new Inventory();
+
+
         }
 
         public void ShowStats()
         {
-            Console.WriteLine("Showing stats");
+            AnsiConsole.Markup("[seagreen3] Showing stats[/]");
+            Console.WriteLine();
             Console.WriteLine();
             if (role == "[bold grey27]Titan[/]")
             {
@@ -57,7 +60,7 @@ namespace SpectreRPG
             Console.WriteLine();
             AnsiConsole.Markup($"[green4]HP[/] : {health}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[red3]Strenght[/] : {strenght}"); 
+            AnsiConsole.Markup($"[red3]Strenght[/] : {strength}"); 
             Console.WriteLine();
             AnsiConsole.Markup($"[grey50]Defense[/] : {defense}");
             Console.WriteLine();
@@ -66,6 +69,11 @@ namespace SpectreRPG
             AnsiConsole.Markup($"[orange4]Dodge[/] : {dodge}");
             Console.WriteLine();
 
+        }
+
+        public void addToInventory(Weapons weapons)
+        {
+            this.playerInventory.AddWeapons(weapons);
         }
     }
 }
