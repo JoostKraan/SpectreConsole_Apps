@@ -15,7 +15,7 @@ Critical chance = 3
 
 Archer
 
-Color = seagreen3
+Color = [bold chartreuse3]
 health = 100 HP
 Damage = 5 ATK
 Defense = 1

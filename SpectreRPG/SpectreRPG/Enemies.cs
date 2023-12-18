@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
+using Spectre.Console;
 
 namespace SpectreRPG
 {
-    
-     public class Enemies
+
+    public class Enemies
     {
+        
         //Enemy Art
         public SoundPlayer audio = new SoundPlayer(@"D:\Repositories\SpectreConsole_Apps\SpectreRPG\SpectreRPG\Audio\fart.wav");
         public string skeletonSprite = ("      .-.\r\n     (o.o)\r\n      |=|\r\n     __|__\r\n   //.=|=.\\\\\r\n  // .=|=. \\\\\r\n  \\\\ .=|=. //\r\n   \\\\(_=_)//\r\n    (:| |:)\r\n     || ||\r\n     () ()\r\n     || ||\r\n     || ||\r\nl42 ==' '==");
@@ -18,33 +20,38 @@ namespace SpectreRPG
 
 
         //Stats
-        public string _name;
-        public int _health;
-        public int _atk;
-        public int _defense;
-        public int _level;
-        public int _crit;
+        public string name;
+        public int health;
+        public int atk;
+        public int defense;
+        public int level;
+        public int critChance;
 
-        
-        public Enemies(string name, int health, int atk, int defense, int level, int crit)
+
+        public Enemies(string name, int health, int atk, int defense, int level, int critChance)
         {
-            _name = name;
-            _health = health;
-            _atk = atk;
-            _defense = defense;
-            _level = level;
-            _crit = crit;
-        
+            this.name = name;
+            this.health = health;
+            this.atk = atk;
+            this.defense = defense;
+            this.level = level;
+            this.critChance = critChance;
+
+        }
+        public void TakeDamage(int health, int damage, int defense)
+        {
+            Random random = new Random();
+            double critChance = 1 + (0.01 * )// TO DO, take values from player class
+
+            double defenseReduction = 0.05 * defense;
+            int damageTaken = (int) (damage - defenseReduction);
+            damageTaken = Math.Max(damageTaken, 0);
+            health -= damageTaken;
+
+            AnsiConsole.Markup($"{name} took {damageTaken} damage. Current health: {health}");
+
         }
 
-        public void calculateDamageTo(int attack, int critRate)
-        {
-            float test1 = (100 - _defense);
-            float damage = attack * ( test1/ 100);
-            var test = "test";
-        }
-        
+
     }
-
-
 }

@@ -75,5 +75,10 @@ namespace SpectreRPG
         {
             this.playerInventory.AddWeapons(weapons);
         }
+
+        public void TakeDamage(int _damage)
+        {
+            health -= _damage; 
+        }
     }
 }

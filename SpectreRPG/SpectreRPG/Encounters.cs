@@ -99,13 +99,13 @@ namespace SpectreRPG
             }
 
 
-            AttackEncounter(player);
+            AttackEncounter(player,playerinventory);
             Console.ReadLine();
             
 
         }
 
-        public void AttackEncounter(Player player)
+        public void AttackEncounter(Player player,Inventory playerinventory)
         {
             AnsiConsole.Markup("[seagreen3]As you start your little journey to the camp you walk into a dark forest.[/]");
             AnsiConsole.Markup("[seagreen3]You follow the path which leads to the elven camp for your quest...[/]");
@@ -113,14 +113,14 @@ namespace SpectreRPG
             AnsiConsole.Markup("[seagreen3]Before you know it there is a Duo of [/][green]globins[/][seagreen3] standing infront of you![/]");
             AnsiConsole.Markup("");
             var test = new Enemies("Shrek", 10, 10, 10, 1, 10);
-            test.calculateDamageTo(player.strength , 0);
-
+            test.calculateDamageTo(player.strength , );
+            test.TakeDamage()
 
         }
 
         private void playerAcuiredWeapon(Weapons weapon)
         {
-            AnsiConsole.Markup($"[seagreen3]You have acquired the [/][purple4]{weapon.name}[/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
             Console.WriteLine();
         }
 
