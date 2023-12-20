@@ -21,9 +21,6 @@ namespace SpectreRPG
         
         static void Main(string[] args)
         {
-            _panel.Border = BoxBorder.Square;
-            _panel.Expand = true;
-            AnsiConsole.Render(_panel);
             game.Start();
             
         }

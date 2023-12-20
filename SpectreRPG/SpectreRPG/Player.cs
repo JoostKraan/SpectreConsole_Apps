@@ -24,7 +24,7 @@ namespace SpectreRPG
         public int critChance;
         private Inventory playerInventory;
         
-        public Player(string name, int health, int atk, string role, int experience, int defense, int critChance)
+        public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,int dodge)
         {
             this.name = name;
             this.health = health;

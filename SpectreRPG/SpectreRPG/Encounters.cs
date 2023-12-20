@@ -110,11 +110,18 @@ namespace SpectreRPG
             AnsiConsole.Markup($"{Textcolor.NormalText("As you start your little journey to the camp you walk into a dark forest.")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
-            AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo")}{Textcolor.RogueText("Globins")}{Textcolor.NormalText("standing infront of you!")}");
-            AnsiConsole.Markup("");
-            Enemies Goblin1 = new Enemies("Shrek", 5, 3, 1, 1, 5);
-            Enemies Goblin2 = new Enemies("Karel", 5, 3, 1, 1, 5);
-            
+            AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo of ")}{Textcolor.RogueText("Globins")}{Textcolor.NormalText("standing infront of you!")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("")}");
+            Enemies Goblin1 = new Enemies("Goblin", 5, 3, 1, 1, 5);
+            Enemies Goblin2 = new Enemies("Goblin", 5, 3, 1, 1, 5);
+
+            string Attack1 = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("")
+                .PageSize(2)
+                .AddChoices(new[] {
+                    ""
+                }));
            
             Console.ReadLine();
             
