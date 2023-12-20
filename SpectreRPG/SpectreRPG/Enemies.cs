@@ -22,7 +22,7 @@ namespace SpectreRPG
         //Stats
         public string name;
         public int health;
-        public int atk;
+        public double atk;
         public int defense;
         public int level;
         public int critChance;
@@ -38,18 +38,38 @@ namespace SpectreRPG
             this.critChance = critChance;
 
         }
-        public void TakeDamage(int health, int damage, int defense)
+        public void TakeDamage(Player player)
         {
-            Random random = new Random();
-            double critChance = 1 + (0.01 * )// TO DO, take values from player class
+            double baseDamage = player.atk * (1.0 - this.defense * 0.01);
+            bool isCriticalHit = (new Random().Next(100) < player.critChance);
+            double damage;
+            if (isCriticalHit)
+            {
+                atk = baseDamage * 1.25;
+            }
+            else
+            {
+                atk = baseDamage;
+            }
+            atk = Math.Max(atk, 1);
+            int damageInt = (int)atk;
 
-            double defenseReduction = 0.05 * defense;
-            int damageTaken = (int) (damage - defenseReduction);
-            damageTaken = Math.Max(damageTaken, 0);
-            health -= damageTaken;
-
-            AnsiConsole.Markup($"{name} took {damageTaken} damage. Current health: {health}");
-
+            this.health -= damageInt;
+            if (this.health <= 0)
+            {
+                Console.WriteLine($"The {this.name} has been defeated!");
+            }
+            else
+            {
+                if (isCriticalHit)
+                {
+                    Console.WriteLine($"Critical Hit! The {this.name} takes {damageInt} damage. Remaining health: {this.health}");
+                }
+                else
+                {
+                    Console.WriteLine($"The {this.name} takes {damageInt} damage. Remaining health: {this.health}");
+                }
+            }
         }
 
 

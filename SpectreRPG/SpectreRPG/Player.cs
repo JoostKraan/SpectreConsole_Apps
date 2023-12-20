@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Spectre.Console.Advanced;
 using Spectre.Console.Extensions;
 using Spectre.Console.Rendering;
+using System.Numerics;
 
 namespace SpectreRPG
 {
@@ -15,56 +16,94 @@ namespace SpectreRPG
     {
         public string name;
         public int health;
-        public int strength;
+        public double atk;
         private int defense;
         public string role;
-        private int Experience;
+        private int experience;
         public int dodge;
+        public int critChance;
         private Inventory playerInventory;
         
-        public Player(string name, int health, int strength, string role, int Experience, int defense)
+        public Player(string name, int health, int atk, string role, int experience, int defense, int critChance)
         {
             this.name = name;
             this.health = health;
-            this.strength = strength;
+            this.atk = atk;
             this.role = role;
-            this.Experience = Experience;
+            this.experience = experience;
             this.defense = defense;
             this.dodge = dodge;
+            this.critChance = critChance;
             this.playerInventory = new Inventory();
 
 
         }
 
+        public void TakeDamage(Enemies enemy)
+        {
+            double baseDamage = enemy.atk * (1.0 - enemy.defense * 0.01);
+            bool isCriticalHit = (new Random().Next(100) < this.critChance);
+            double damage;
+
+            if (isCriticalHit)
+            {
+                enemy.atk = baseDamage * 1.25;
+            }
+            else
+            {
+                enemy.atk = baseDamage;
+            }
+            damage = Math.Max(enemy.atk, 1);
+            int damageInt = (int)damage;
+            this.health -= damageInt;
+            if (this.health <= 0)
+            {
+                
+                Console.WriteLine($"You have been defeated by the {enemy.name}!");
+            }
+            else
+            {
+                
+                if (isCriticalHit)
+                {
+                    Console.WriteLine($"Critical Hit! You take {damageInt} damage. Remaining health: {this.health}");
+                }
+                else
+                {
+                    Console.WriteLine($"You take {damageInt} damage. Remaining health: {this.health}");
+                }
+            }
+        }
+
         public void ShowStats()
         {
-            AnsiConsole.Markup("[seagreen3] Showing stats[/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("Showing stats....")}");
             Console.WriteLine();
             Console.WriteLine();
             if (role == "[bold grey27]Titan[/]")
             {
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold grey27]{role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.TitanText(role)}{Textcolor.NormalText("these are your stats currently")}");
             }
 
             if (role == "[bold chartreuse3]Rogue[/]")
             {
                 
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold chartreuse3]{role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.RogueText(role)}{Textcolor.NormalText("these are your stats currently")}");
             }
 
             if (role == "[bold blueviolet]Warlock[/]")
             {
                 
-                AnsiConsole.Markup($"[seagreen3]As an [/][bold purple3]{role}[/][seagreen3] these are your stats currently[/]");
+                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.WarlockText($"{role}")}{Textcolor.NormalText("these are your stats currently")}");
             }
             Console.WriteLine();
             AnsiConsole.Markup($"[green4]HP[/] : {health}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[red3]Strenght[/] : {strength}"); 
+            AnsiConsole.Markup($"[red3]Strenght[/] : {atk}"); 
             Console.WriteLine();
             AnsiConsole.Markup($"[grey50]Defense[/] : {defense}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[blueviolet]XP[/] : {Experience}");
+            AnsiConsole.Markup($"[blueviolet]XP[/] : {experience}");
             Console.WriteLine();
             AnsiConsole.Markup($"[orange4]Dodge[/] : {dodge}");
             Console.WriteLine();

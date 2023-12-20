@@ -14,19 +14,19 @@ namespace SpectreRPG
         public void StartingEncounter(Player player)
         {
 
-            AnsiConsole.Markup("[seagreen3]In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, [/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, ")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[yellow1]the Ancient Bladecrafter[/][seagreen3]. This legendary weapon, steeped in the history of [/][green]Eldoria[/],");
+            AnsiConsole.Markup($"{Textcolor.WeaponText("the Ancient EdgeBlade")}{Textcolor.NormalText("This legendary weapon, steeped in the history of Eldoria ,")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[seagreen3]is said to hold extraordinary power. As you grasp the hilt of the [/][purple4]EdgeBlade[/],");
+            AnsiConsole.Markup($"{Textcolor.NormalText("is said to hold extraordinary power. As you grasp the hilt of the")}{Textcolor.WeaponText("EdgeBlade ")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[seagreen3]you feel a surge of energy coursing through you, marking the start of a remarkable journey.[/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("you feel a surge of energy coursing through you, marking the start of a remarkable journey.")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[seagreen3]As you traverse the ancient paths, you encounter a wise old man named [/][italic blue]Aric the Wanderer[/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("As you traverse the ancient paths, you encounter a wise old man named")}{Textcolor.NameText("Aric the Wanderer")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[seagreen3]With a knowing gaze, he senses the aura of the [/][purple4]EdgeBlade[/][seagreen3] and approaches you.[/] ");
+            AnsiConsole.Markup($"{Textcolor.NormalText("With a knowing gaze, he senses the aura of the ")}{Textcolor.WeaponText("EdgeBlade")}{Textcolor.NormalText("and approaches you.")}");
             Console.WriteLine();
-            AnsiConsole.Markup("[italic blue]Aric[/][seagreen3] reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.[/]");
+            AnsiConsole.Markup($"{Textcolor.NameText("Aric")}{Textcolor.NormalText("reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.")}");
             playerinventory = new Inventory();
             Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
             Console.WriteLine();
@@ -37,7 +37,7 @@ namespace SpectreRPG
 
             string addweapon = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title($"[seagreen3]Do you want to put[/] [purple4]{Edgeblade.name}[/][seagreen3] in your inventory?[/]")
+                .Title($"{Textcolor.NormalText("Do you want to put")}{Textcolor.WeaponText(Edgeblade.name)}{Textcolor.NormalText("in your inventory?")}")
                 .PageSize(3)
                 .AddChoices(new[]
                 {
@@ -107,14 +107,17 @@ namespace SpectreRPG
 
         public void AttackEncounter(Player player,Inventory playerinventory)
         {
-            AnsiConsole.Markup("[seagreen3]As you start your little journey to the camp you walk into a dark forest.[/]");
-            AnsiConsole.Markup("[seagreen3]You follow the path which leads to the elven camp for your quest...[/]");
-            AnsiConsole.Markup("[seagreen3]When following the path you hear footsteps coming closer and closer[/]");
-            AnsiConsole.Markup("[seagreen3]Before you know it there is a Duo of [/][green]globins[/][seagreen3] standing infront of you![/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("As you start your little journey to the camp you walk into a dark forest.")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo")}{Textcolor.RogueText("Globins")}{Textcolor.NormalText("standing infront of you!")}");
             AnsiConsole.Markup("");
-            var test = new Enemies("Shrek", 10, 10, 10, 1, 10);
-            test.calculateDamageTo(player.strength , );
-            test.TakeDamage()
+            Enemies Goblin1 = new Enemies("Shrek", 5, 3, 1, 1, 5);
+            Enemies Goblin2 = new Enemies("Karel", 5, 3, 1, 1, 5);
+            
+           
+            Console.ReadLine();
+            
 
         }
 

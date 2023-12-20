@@ -33,7 +33,7 @@ namespace SpectreRPG
         public void PrintMeleeStats()
         {
             AnsiConsole.WriteLine();
-            AnsiConsole.Markup($"[yellow1]Weapon[/] : {name}");
+            AnsiConsole.Markup($"[yellow1]Weapon[/] : [yellow1]{name}[/]");
             AnsiConsole.WriteLine();
             AnsiConsole.Markup($"[red3]Damage[/] : {damage}");
             AnsiConsole.WriteLine();
@@ -45,7 +45,7 @@ namespace SpectreRPG
         public void PrintRangedStats()
         {
             AnsiConsole.WriteLine();
-            AnsiConsole.Markup($"[yellow1]Weapon[/] : {name}");
+            AnsiConsole.Markup($"[yellow1]Weapon[/] : [yellow1]{name}[/]");
             AnsiConsole.WriteLine();
             AnsiConsole.Markup($"[red3]Damage[/] : {damage}");
             AnsiConsole.WriteLine();
