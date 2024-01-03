@@ -33,6 +33,7 @@ namespace SpectreRPG
             Console.ReadLine();
             Console.WriteLine();
             AnsiConsole.Markup("[seagreen3]You've acquired a new Weapon![/]");
+            player.GainExperience(125);
             Console.ReadLine();
 
             string addweapon = AnsiConsole.Prompt(
@@ -117,10 +118,10 @@ namespace SpectreRPG
 
             string Attack1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title("")
+                .Title("As the Goblins notice you one starts running towards you in an attempt to attack you and steal all of your valuables")
                 .PageSize(2)
                 .AddChoices(new[] {
-                    ""
+                    "Flee","Fight back"
                 }));
            
             Console.ReadLine();

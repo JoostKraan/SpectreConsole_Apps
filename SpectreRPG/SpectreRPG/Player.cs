@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Spectre.Console;
-using System.Net.Http.Headers;
-using Spectre.Console.Advanced;
-using Spectre.Console.Extensions;
-using Spectre.Console.Rendering;
-using System.Numerics;
-
 namespace SpectreRPG
 {
     public class Player
     {
         public string name;
+        private int XpToNextLevel = 100;
         public int health;
         public double atk;
+        public int level;
         private int defense;
         public string role;
-        private int experience;
+        public int experience;
         public int dodge;
         public int critChance;
         private Inventory playerInventory;
-        
-        public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,int dodge)
+
+        public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,
+            int dodge, int level)
         {
             this.name = name;
             this.health = health;
@@ -34,6 +27,7 @@ namespace SpectreRPG
             this.defense = defense;
             this.dodge = dodge;
             this.critChance = critChance;
+            this.level = level;
             this.playerInventory = new Inventory();
 
 
@@ -53,17 +47,18 @@ namespace SpectreRPG
             {
                 enemy.atk = baseDamage;
             }
+
             damage = Math.Max(enemy.atk, 1);
             int damageInt = (int)damage;
             this.health -= damageInt;
             if (this.health <= 0)
             {
-                
+
                 Console.WriteLine($"You have been defeated by the {enemy.name}!");
             }
             else
             {
-                
+
                 if (isCriticalHit)
                 {
                     Console.WriteLine($"Critical Hit! You take {damageInt} damage. Remaining health: {this.health}");
@@ -82,24 +77,28 @@ namespace SpectreRPG
             Console.WriteLine();
             if (role == "[bold grey27]Titan[/]")
             {
-                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.TitanText(role)}{Textcolor.NormalText("these are your stats currently")}");
+                AnsiConsole.Markup(
+                    $"{Textcolor.NormalText("As a")}{Textcolor.TitanText(role)}{Textcolor.NormalText("these are your stats currently")}");
             }
 
             if (role == "[bold chartreuse3]Rogue[/]")
             {
-                
-                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.RogueText(role)}{Textcolor.NormalText("these are your stats currently")}");
+
+                AnsiConsole.Markup(
+                    $"{Textcolor.NormalText("As a")}{Textcolor.RogueText(role)}{Textcolor.NormalText("these are your stats currently")}");
             }
 
             if (role == "[bold blueviolet]Warlock[/]")
             {
-                
-                AnsiConsole.Markup($"{Textcolor.NormalText("As a")}{Textcolor.WarlockText($"{role}")}{Textcolor.NormalText("these are your stats currently")}");
+
+                AnsiConsole.Markup(
+                    $"{Textcolor.NormalText("As a")}{Textcolor.WarlockText($"{role}")}{Textcolor.NormalText("these are your stats currently")}");
             }
+
             Console.WriteLine();
             AnsiConsole.Markup($"[green4]HP[/] : {health}");
             Console.WriteLine();
-            AnsiConsole.Markup($"[red3]Strenght[/] : {atk}"); 
+            AnsiConsole.Markup($"[red3]Strenght[/] : {atk}");
             Console.WriteLine();
             AnsiConsole.Markup($"[grey50]Defense[/] : {defense}");
             Console.WriteLine();
@@ -117,7 +116,33 @@ namespace SpectreRPG
 
         public void TakeDamage(int _damage)
         {
-            health -= _damage; 
+            health -= _damage;
+        }
+
+        public void GainExperience(int amount)
+        {
+            experience += amount;
+            Console.WriteLine();
+            AnsiConsole.Markup($"Gained {amount} experience points!");
+            while (experience >= XpToNextLevel)
+            {
+                LevelUp();
+            }
+
+        }
+
+        public void LevelUp()
+        {
+            {
+                level++;
+                Console.WriteLine();
+                AnsiConsole.Markup($"Congratulations! you have reached level {level}");
+                int remainingExperience = Math.Max(0, experience - XpToNextLevel);
+                experience -= XpToNextLevel;
+                XpToNextLevel = (int)(XpToNextLevel * 1.25);
+                Console.WriteLine();
+                AnsiConsole.Markup($"Experience required for the next level: {XpToNextLevel}, Current experience : {remainingExperience}");
+            }
         }
     }
 }
