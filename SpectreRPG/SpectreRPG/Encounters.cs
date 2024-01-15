@@ -251,7 +251,7 @@ namespace SpectreRPG
 
         public void attack(Enemies enemy,Player player)
         {
-            Goblin2.TakeDamage(player)//TODO fix this death
+            Goblin2.TakeDamage(player) //TODO fix this death
         }
        
 
