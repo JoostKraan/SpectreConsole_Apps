@@ -2,18 +2,20 @@
 using Spectre.Console;
 namespace SpectreRPG
 {
+   
     public class Player
     {
         public string name;
         private int XpToNextLevel = 100;
         public int health;
-        public double atk;
+        public int atk;
         public int level;
         private int defense;
         public string role;
         public int experience;
         public int dodge;
         public int critChance;
+       
         private Inventory playerInventory;
 
         public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,
@@ -35,19 +37,19 @@ namespace SpectreRPG
 
         public void TakeDamage(Enemies enemy)
         {
+            double critmultiplier = 1.25;
             double baseDamage = enemy.atk * (1.0 - enemy.defense * 0.01);
             bool isCriticalHit = (new Random().Next(100) < this.critChance);
             double damage;
 
             if (isCriticalHit)
             {
-                enemy.atk = baseDamage * 1.25;
+                enemy.atk = baseDamage * critmultiplier;
             }
             else
             {
                 enemy.atk = baseDamage;
             }
-
             damage = Math.Max(enemy.atk, 1);
             int damageInt = (int)damage;
             this.health -= damageInt;
@@ -111,6 +113,7 @@ namespace SpectreRPG
 
         public void addToInventory(Weapons weapons)
         {
+            atk += weapons.damage;
             this.playerInventory.AddWeapons(weapons);
         }
 
@@ -124,7 +127,7 @@ namespace SpectreRPG
             experience += amount;
             Console.WriteLine();
             AnsiConsole.Markup($"Gained {amount} experience points!");
-            while (experience >= XpToNextLevel)
+            if (experience >= XpToNextLevel)
             {
                 LevelUp();
             }

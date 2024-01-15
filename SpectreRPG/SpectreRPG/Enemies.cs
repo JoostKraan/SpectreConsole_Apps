@@ -21,14 +21,14 @@ namespace SpectreRPG
 
         //Stats
         public string name;
-        public int health;
+        public double health;
         public double atk;
         public int defense;
         public int level;
         public int critChance;
 
 
-        public Enemies(string name, int health, int atk, int defense, int level, int critChance)
+        public Enemies(string name, double health, double atk, int defense, int level, int critChance)
         {
             this.name = name;
             this.health = health;
@@ -40,18 +40,20 @@ namespace SpectreRPG
         }
         public void TakeDamage(Player player)
         {
-            double baseDamage = player.atk * (1.0 - this.defense * 0.01);
+            double critMultiplier = 1.15;
+            double baseDamage = (int)(player.atk * (1.0 - this.defense * 0.01));
             bool isCriticalHit = (new Random().Next(100) < player.critChance);
             if (isCriticalHit)
             {
-                atk = baseDamage * 1.25;
+                
+                health -= baseDamage * critMultiplier;
             }
             else
             {
-                atk = baseDamage;
+                atk = (int)baseDamage;
             }
             atk = Math.Max(atk, 1);
-            int damageInt = (int)atk;
+            double damageInt = atk;
 
             this.health -= damageInt;
             if (this.health <= 0)
@@ -69,6 +71,7 @@ namespace SpectreRPG
                     Console.WriteLine($"The {this.name} takes {damageInt} damage. Remaining health: {this.health}");
                 }
             }
+            Console.WriteLine($"you did {damageInt} damage");
         }
 
 

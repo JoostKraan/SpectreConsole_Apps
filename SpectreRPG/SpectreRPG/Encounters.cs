@@ -4,16 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using SixLabors.ImageSharp.Processing.Processors.Convolution;
 using Spectre.Console;
 
 namespace SpectreRPG
 {
     public class Encounters
     {
+        Enemies Goblin1 = new Enemies("Gorlock", 5, 3, 1, 1, 5);
+        Enemies Goblin2 = new Enemies("Bingus", 5, 3, 1, 1, 5);
+
         Inventory playerinventory;
         public void StartingEncounter(Player player)
         {
-
+            
             AnsiConsole.Markup($"{Textcolor.NormalText("In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, ")}");
             Console.WriteLine();
             AnsiConsole.Markup($"{Textcolor.WeaponText("the Ancient EdgeBlade")}{Textcolor.NormalText("This legendary weapon, steeped in the history of Eldoria ,")}");
@@ -82,6 +86,7 @@ namespace SpectreRPG
             Console.WriteLine();
             AnsiConsole.Markup("[seagreen3]Ready to uncover secrets?[/]");
             Console.WriteLine();
+            Console.Clear();
             Console.WriteLine();
             string Encounter1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -98,6 +103,7 @@ namespace SpectreRPG
                 Environment.Exit(0);
               
             }
+            //Todo 
 
 
             AttackEncounter(player,playerinventory);
@@ -111,29 +117,98 @@ namespace SpectreRPG
             AnsiConsole.Markup($"{Textcolor.NormalText("As you start your little journey to the camp you walk into a dark forest.")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
-            AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo of ")}{Textcolor.RogueText("Globins")}{Textcolor.NormalText("standing infront of you!")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo of ")}{Textcolor.RogueText("Glowblins")}{Textcolor.NormalText("standing infront of you!")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("")}");
-            Enemies Goblin1 = new Enemies("Goblin", 5, 3, 1, 1, 5);
-            Enemies Goblin2 = new Enemies("Goblin", 5, 3, 1, 1, 5);
-
+            
             string Attack1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title("As the Goblins notice you one starts running towards you in an attempt to attack you and steal all of your valuables")
-                .PageSize(2)
+                .Title("As the glowblins notice you, one called Gorlock starts running towards you in an attempt to attack you and steal all of your valuables")
+                .PageSize(3)
                 .AddChoices(new[] {
                     "Flee","Fight back"
                 }));
+            if(Attack1 == "Fight back")
+            {
+                while (player.health > 0 || (Goblin1.health <= 0 && Goblin2.health <= 0))
+                {
+                    string playerChoice = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("")
+                            .PageSize(3)
+                            .AddChoices(new[] {
+                                "Use Melee",""
+                            }));
+                    switch (playerChoice)
+                    {
+                        case "Use Melee":
+                            Goblin1.TakeDamage(player);
+                            break;
+                        default:
+                            AttackEncounter(player, playerinventory);
+                            break;
+                    }
+                    if (Goblin1.health <= 0)
+                    {
+                        AnsiConsole.Markup("As Bingus the goblin watches as you hit his companion. He falls down and dies");
+                        AnsiConsole.Markup("Bingus the goblin charges at you with rage");
+
+                        string playerchoice1 = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .Title("")
+                                .PageSize(3)
+                                .AddChoices(new[] {
+                                    "Dodge","Attack"
+                                }));
+
+                        switch (playerchoice1)
+                        {
+                            case "Dodge":
+                                Dodge(Goblin2);
+                                    break;
+                        }
+
+                    }
+
+
+                }
+                
+            }
+            if (Attack1 == "Flee")
+            {
+                Flee(player, playerinventory);
+            }
+            
+            if (player.health == 0) {
+                Console.WriteLine("death");
+            }
+
+           
            
             Console.ReadLine();
             
 
         }
+        public void Flee(Player player,Inventory playerinventory)
+        {
+            AnsiConsole.Markup($"{Textcolor.NormalText("You've chosen to flee from the scene to try and outrun the")}{Textcolor.RogueText("Glowblins")}{Textcolor.NormalText("and escape")}");
+        }
+        public void Fight(Player player, Inventory playerinventory)
+        {
+            player.TakeDamage(player.health);
+            AnsiConsole.Markup("");
+        }
 
         private void playerAcuiredWeapon(Weapons weapon)
         {
             AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
-            Console.WriteLine();
+            
         }
+        public void Dodge(Enemies enemy)
+        {
+            AnsiConsole.Markup($"You have dodged {Goblin2.name}");
+            Console.ReadLine();
+        }
+       
 
 
     }
