@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -13,7 +14,7 @@ namespace SpectreRPG
     {
         Enemies Goblin1 = new Enemies("Gorlock", 5, 3, 1, 1, 5);
         Enemies Goblin2 = new Enemies("Bingus", 5, 3, 1, 1, 5);
-
+        Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
         Inventory playerinventory;
         public void StartingEncounter(Player player)
         {
@@ -32,7 +33,6 @@ namespace SpectreRPG
             Console.WriteLine();
             AnsiConsole.Markup($"{Textcolor.NameText("Aric")}{Textcolor.NormalText("reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.")}");
             playerinventory = new Inventory();
-            Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
             Console.WriteLine();
             Console.ReadLine();
             Console.WriteLine();
@@ -118,18 +118,19 @@ namespace SpectreRPG
             AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("Before you know it there is a duo of ")}{Textcolor.RogueText("Glowblins")}{Textcolor.NormalText("standing infront of you!")}");
-            AnsiConsole.Markup($"{Textcolor.NormalText("")}");
-            
+            AnsiConsole.Markup($"{Textcolor.NormalText("You try to talk to them by offering them peace")}");
+            AnsiConsole.Markup($"{Textcolor.NormalText("The Glowblins ignore you and demand you to give your shiny sword.")}");
+
             string Attack1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title("As the glowblins notice you, one called Gorlock starts running towards you in an attempt to attack you and steal all of your valuables")
+                .Title("Gorlock starts running towards you in an attempt to attack you and steal all of your valuables")
                 .PageSize(3)
                 .AddChoices(new[] {
                     "Flee","Fight back"
                 }));
             if(Attack1 == "Fight back")
             {
-                while (player.health > 0 || (Goblin1.health <= 0 && Goblin2.health <= 0))
+                while (Goblin1.health >= 0 && Goblin2.health >= 0)
                 {
                     string playerChoice = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
@@ -149,8 +150,9 @@ namespace SpectreRPG
                     }
                     if (Goblin1.health <= 0)
                     {
+                        bool hasdodged = false;
                         AnsiConsole.Markup("As Bingus the goblin watches as you hit his companion. He falls down and dies");
-                        AnsiConsole.Markup("Bingus the goblin charges at you with rage");
+                        AnsiConsole.Markup(". Bingus the goblin charges at you with rage");
 
                         string playerchoice1 = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
@@ -163,11 +165,33 @@ namespace SpectreRPG
                         switch (playerchoice1)
                         {
                             case "Dodge":
-                                Dodge(Goblin2);
+                                hasdodged = true;
+                                Dodge(Goblin2,player);
                                     break;
+                            case "Attack":
+                                attack(Goblin2,player);
+                                break;
+
+                        }
+                        string playerchoice2 = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .Title($"You stand face to face with {Goblin2.name}. You try to negotiate about keeping peace but {Goblin2.name} denies and tries to go in for an attack, " +
+                                       $"so the only option you have is to end this fight by swinging your {Edgeblade.name} at the enemy")
+                                .PageSize(3)
+                                .AddChoices(new[] {
+                                    "Attack",""
+                                }));
+
+                        if (playerchoice2 == "Attack")
+                        {
+                            Goblin2.TakeDamage(player);
                         }
 
+
                     }
+                    AnsiConsole.Markup("");
+                    Console.ReadLine();
+                    player.GainExperience(100);
 
 
                 }
@@ -203,10 +227,31 @@ namespace SpectreRPG
             AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
             
         }
-        public void Dodge(Enemies enemy)
+        public void Dodge(Enemies enemy,Player player)
         {
-            AnsiConsole.Markup($"You have dodged {Goblin2.name}");
+            bool isDodged;
+            Random random = new Random();
+            int randomChance = random.Next(1);
+
+            if (randomChance == 0)
+                isDodged = false;
+            else
+                isDodged = true;
+            
+            if (isDodged)
+                AnsiConsole.Markup($"You have dodged {Goblin2.name} and escaped his attack by a hair!");
+            else
+            {
+                AnsiConsole.Markup($"Your attempt in dodging {Goblin2.name} failed! He hit you and you took some damage...");
+                player.TakeDamage(Goblin2);
+            }
+            
             Console.ReadLine();
+        }
+
+        public void attack(Enemies enemy,Player player)
+        {
+            Goblin2.TakeDamage(player)//TODO fix this death
         }
        
 

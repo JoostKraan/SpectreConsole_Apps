@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
+using System.Runtime.CompilerServices;
 using Spectre.Console;
 
 namespace SpectreRPG
@@ -72,7 +73,12 @@ namespace SpectreRPG
                 }
             }
             Console.WriteLine($"you did {damageInt} damage");
+            if (this.health <= 0)
+            {
+                this.health = 0;
+            }
         }
+        
 
 
     }
