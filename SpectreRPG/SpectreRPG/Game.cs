@@ -11,7 +11,6 @@ namespace SpectreRPG
   
     public class Game
     {
-      
         public Encounters encounters = new Encounters();
         public Player _player;
         private Boolean PlayerIsNotDeath = true;
@@ -63,16 +62,11 @@ namespace SpectreRPG
             Console.WriteLine();
             Console.ReadLine();
             AnsiConsole.Clear();
-          
-              
            
             while (PlayerIsNotDeath)
             {
                 encounters.StartingEncounter(_player);
             }
-           
-              
-
 
         }
 
@@ -81,9 +75,6 @@ namespace SpectreRPG
             PlayerIsNotDeath = false;
             return play;
         }
-       
-
-
     }
 
 
