@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using SixLabors.ImageSharp.Processing.Processors.Convolution;
-using Spectre.Console;
+﻿using Spectre.Console;
+using SpectreRPG.Automation;
 
-namespace SpectreRPG
+
+namespace SpectreRPG.Game
 {
     public class Encounters
     {
@@ -18,7 +12,9 @@ namespace SpectreRPG
         Inventory playerinventory;
         public void StartingEncounter(Player player)
         {
-            
+            Console.Clear();
+            TextPos.Center($"{Textcolor.NormalText("Story Intro")}");
+            AnsiConsole.WriteLine();
             AnsiConsole.Markup($"{Textcolor.NormalText("In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, ")}");
             Console.WriteLine();
             AnsiConsole.Markup($"{Textcolor.WeaponText("the Ancient EdgeBlade")}{Textcolor.NormalText("This legendary weapon, steeped in the history of Eldoria ,")}");
@@ -54,30 +50,29 @@ namespace SpectreRPG
             {
                 player.addToInventory(Edgeblade);
             }
-           
+
             else
             {
                 Console.WriteLine("you leave the sword and go home (Quit)");
-                Console.ReadLine() ;
+                Console.ReadLine();
                 Environment.Exit(0);
             }
-           
-            playerAcuiredWeapon(Edgeblade);
+            player.PlayerAcquireddWeapon(Edgeblade);
 
             if (player.role == "[bold blueviolet]Warlock[/]")
             {
                 Edgeblade.PrintRangedStats();
                 Console.WriteLine();
-                
+
             }
 
             else
             {
                 Edgeblade.PrintMeleeStats();
                 Console.WriteLine();
-                
+
             }
-                
+
             Console.ReadLine();
             Console.Clear();
             AnsiConsole.Markup("[italic blue]Aric[/][seagreen3] hands you a quest note urging you to find an elven camp in [/][green]Eldoria.[/]");
@@ -95,25 +90,22 @@ namespace SpectreRPG
                     .AddChoices(new[] {
                         "[red]No thanks, I would rather die than find out...[/]","[green]Im in! I will head there as soon as possible![/]"
                     }));
-            if(Encounter1 == "[red]No thanks, I would rather die than find out...[/]")
+            if (Encounter1 == "[red]No thanks, I would rather die than find out...[/]")
             {
                 AnsiConsole.Clear();
                 AnsiConsole.Markup("[seagreen3]You go home and [/][italic blue]Aric[/][seagreen3] is disappointed...[/]");
-                Console.ReadLine() ;
+                Console.ReadLine();
                 Environment.Exit(0);
-              
+
             }
-            //Todo 
-
-
-            AttackEncounter(player,playerinventory);
+            AttackEncounter(player, playerinventory);
+            Console.Clear();
             Console.ReadLine();
-            
-
         }
-
-        public void AttackEncounter(Player player,Inventory playerinventory)
+        public void AttackEncounter(Player player, Inventory playerinventory)
         {
+            Console.Clear();
+            TextPos.Center("Under Attack!");
             AnsiConsole.Markup($"{Textcolor.NormalText("As you start your little journey to the camp you walk into a dark forest.")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
@@ -128,9 +120,9 @@ namespace SpectreRPG
                 .AddChoices(new[] {
                     "Flee","Fight back"
                 }));
-            if(Attack1 == "Fight back")
+            if (Attack1 == "Fight back")
             {
-                while (Goblin1.health >= 0 && Goblin2.health >= 0)
+                while (Goblin1.health > 0 && Goblin2.health > 0)
                 {
                     string playerChoice = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
@@ -166,10 +158,10 @@ namespace SpectreRPG
                         {
                             case "Dodge":
                                 hasdodged = true;
-                                Dodge(Goblin2,player);
-                                    break;
+                                player.Dodge(Goblin2, player);
+                                break;
                             case "Attack":
-                                attack(Goblin2,player);
+                                Goblin2.TakeDamage(player);
                                 break;
 
                         }
@@ -186,75 +178,71 @@ namespace SpectreRPG
                         {
                             Goblin2.TakeDamage(player);
                         }
-
-
                     }
-                    AnsiConsole.Markup("");
-                    Console.ReadLine();
-                    player.GainExperience(100);
-
-
                 }
-                
+                AnsiConsole.Markup("");
+                Console.ReadLine();
+                player.GainExperience(100);
+
             }
             if (Attack1 == "Flee")
             {
-                Flee(player, playerinventory);
+                AnsiConsole.Markup($"{Textcolor.NormalText("You've chosen to flee from the scene to try and outrun the")}{Textcolor.RogueText("Glowblins")}{Textcolor.NormalText("and escape")}");
             }
-            
-            if (player.health == 0) {
+
+            if (player.health == 0)
+            {
                 Console.WriteLine("death");
             }
-
-           
-           
             Console.ReadLine();
-            
+            MissionEncounter(player);
+        }
 
-        }
-        public void Flee(Player player,Inventory playerinventory)
+        void MissionEncounter(Player player)
         {
-            AnsiConsole.Markup($"{Textcolor.NormalText("You've chosen to flee from the scene to try and outrun the")}{Textcolor.RogueText("Glowblins")}{Textcolor.NormalText("and escape")}");
+            AnsiConsole.Clear();
+            TextPos.Center("Mission");
+            AnsiConsole.Markup("After that battle you can finally continue your adventure to the Elven Camp");
+            AnsiConsole.Markup("You succesfully reached the camp and look around for someone to talk to...");
+            AnsiConsole.Markup("You see a strange looking Elf standing there, he looks like he has been through a lot");
+            AnsiConsole.Markup("You walk up to the elf he looks at you with a confused look on his face");
+            
+            string playerChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("What do you want to do?")
+                    .PageSize(3)
+                    .AddChoices(new[]
+                    {
+                        "Introduce yourself.",
+                        "Ask about the Elven Camp.",
+                        "Offer assistance."
+                    }));
+            switch (playerChoice)
+            {
+                case "Introduce yourself":
+                    Introduction(player);
+                    break;
+                case "Ask about the Elven Camp":
+                    Camp(player);
+                    break;
+                case "Offer assistance":
+                    ScrambleGame(player);
+                    break;
+            }
+            Console.ReadLine();
         }
-        public void Fight(Player player, Inventory playerinventory)
+
+        public void Introduction(Player player)
         {
-            player.TakeDamage(player.health);
             AnsiConsole.Markup("");
         }
-
-        private void playerAcuiredWeapon(Weapons weapon)
+        public void Camp(Player player)
         {
-            AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
-            
+
         }
-        public void Dodge(Enemies enemy,Player player)
+        public void ScrambleGame(Player player)
         {
-            bool isDodged;
-            Random random = new Random();
-            int randomChance = random.Next(1);
 
-            if (randomChance == 0)
-                isDodged = false;
-            else
-                isDodged = true;
-            
-            if (isDodged)
-                AnsiConsole.Markup($"You have dodged {Goblin2.name} and escaped his attack by a hair!");
-            else
-            {
-                AnsiConsole.Markup($"Your attempt in dodging {Goblin2.name} failed! He hit you and you took some damage...");
-                player.TakeDamage(Goblin2);
-            }
-            
-            Console.ReadLine();
         }
-
-        public void attack(Enemies enemy,Player player)
-        {
-            Goblin2.TakeDamage(player) //TODO fix this death
-        }
-       
-
-
     }
 }

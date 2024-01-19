@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectreRPG
+namespace SpectreRPG.Game
 {
     public class Weapons
     {
@@ -19,7 +19,7 @@ namespace SpectreRPG
 
 
 
-        public Weapons(string name,int damage,int accuracy, int skillReq, int maxAmmo, int crit,int hitChance)
+        public Weapons(string name, int damage, int accuracy, int skillReq, int maxAmmo, int crit, int hitChance)
         {
             this.name = name;
             this.damage = damage;
@@ -60,7 +60,7 @@ namespace SpectreRPG
             AnsiConsole.Markup($"[lightslategrey]Maximum Ammunition[/] :  {maxAmmo}");
         }
 
-        
+
 
     }
 }

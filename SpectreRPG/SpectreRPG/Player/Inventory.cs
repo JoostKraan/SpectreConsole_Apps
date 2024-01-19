@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Spectre.Console;
 
-namespace SpectreRPG
+namespace SpectreRPG.Game
 {
     public class Inventory
     {
@@ -34,7 +34,7 @@ namespace SpectreRPG
             {
                 Console.WriteLine();
                 AnsiConsole.Markup($"[seagreen3]Weapon[/] :[yellow] {weapon.name}[/]");
-                
+
             }
         }
 
