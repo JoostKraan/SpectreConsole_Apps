@@ -24,8 +24,13 @@ namespace SpectreRPG.Automation
         {
             var rule = new Rule(input);
             rule.Justification = Justify.Right;
-            AnsiConsole.Write(rule);
+            AnsiConsole.Write($"$[orange3]{rule}[/]");
             return input;
+        }
+
+        public static void CenterText()
+        {
+            Console.SetCursorPosition(45, 2);
         }
 
     }

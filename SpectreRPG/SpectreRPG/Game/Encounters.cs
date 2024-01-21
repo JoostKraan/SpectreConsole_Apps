@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using SpectreRPG.Automation;
+using System.Xml.Linq;
 
 
 namespace SpectreRPG.Game
@@ -28,10 +29,9 @@ namespace SpectreRPG.Game
             AnsiConsole.Markup($"{Textcolor.NormalText("With a knowing gaze, he senses the aura of the ")}{Textcolor.WeaponText("EdgeBlade")}{Textcolor.NormalText("and approaches you.")}");
             Console.WriteLine();
             AnsiConsole.Markup($"{Textcolor.NameText("Aric")}{Textcolor.NormalText("reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.")}");
-            playerinventory = new Inventory();
             Console.WriteLine();
             Console.ReadLine();
-            Console.WriteLine();
+            Console.Clear();
             AnsiConsole.Markup("[seagreen3]You've acquired a new Weapon![/]");
             player.GainExperience(125);
             Console.ReadLine();
@@ -61,6 +61,7 @@ namespace SpectreRPG.Game
 
             if (player.role == "[bold blueviolet]Warlock[/]")
             {
+                Console.WriteLine();
                 Edgeblade.PrintRangedStats();
                 Console.WriteLine();
 
@@ -68,6 +69,7 @@ namespace SpectreRPG.Game
 
             else
             {
+                Console.WriteLine();
                 Edgeblade.PrintMeleeStats();
                 Console.WriteLine();
 
@@ -82,7 +84,7 @@ namespace SpectreRPG.Game
             AnsiConsole.Markup("[seagreen3]Ready to uncover secrets?[/]");
             Console.WriteLine();
             Console.Clear();
-            Console.WriteLine();
+            TextPos.Center("Heading where?");
             string Encounter1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title($"[seagreen3]The note that[/][italic blue] Aric [/][seagreen3]handed you says to head north for 3 kilometers to find the elf camp[/]")
@@ -105,7 +107,7 @@ namespace SpectreRPG.Game
         public void AttackEncounter(Player player, Inventory playerinventory)
         {
             Console.Clear();
-            TextPos.Center("Under Attack!");
+            TextPos.Center("[orange3]Under Attack![/]");
             AnsiConsole.Markup($"{Textcolor.NormalText("As you start your little journey to the camp you walk into a dark forest.")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("You follow the path which leads to the elven camp for your quest...")}");
             AnsiConsole.Markup($"{Textcolor.NormalText("When following the path you hear footsteps coming closer and closer")}");
@@ -120,10 +122,15 @@ namespace SpectreRPG.Game
                 .AddChoices(new[] {
                     "Flee","Fight back"
                 }));
+            
             if (Attack1 == "Fight back")
             {
-                while (Goblin1.health > 0 && Goblin2.health > 0)
+                Console.Clear();
+                bool isFighting = true;
+                TextPos.Center($">|[orange3]Battle![/]| [red]Target[/] : {Textcolor.GoblinText(Goblin1.name)} [darkred]Health[/] :[darkred] {Goblin1.health}[/]|<");
+                while (Goblin1.health > 0 && Goblin2.health > 0 && isFighting == true )
                 {
+                    
                     string playerChoice = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("")
@@ -143,9 +150,8 @@ namespace SpectreRPG.Game
                     if (Goblin1.health <= 0)
                     {
                         bool hasdodged = false;
-                        AnsiConsole.Markup("As Bingus the goblin watches as you hit his companion. He falls down and dies");
-                        AnsiConsole.Markup(". Bingus the goblin charges at you with rage");
-
+                        AnsiConsole.Markup($"{Textcolor.NormalText("As ")}[green]Bingus[/]{Textcolor.NormalText("the goblin watches as you hit his companion. He falls down and dies")}");
+                        AnsiConsole.Markup($".{Textcolor.GoblinText("Bingus")}{Textcolor.NormalText("the goblin charges at you with rage")}");
                         string playerchoice1 = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
                                 .Title("")
@@ -161,14 +167,16 @@ namespace SpectreRPG.Game
                                 player.Dodge(Goblin2, player);
                                 break;
                             case "Attack":
+                                Console.Clear();
+                                TextPos.Center($">|[orange3]Battle![/]| [red]Target[/] : {Textcolor.GoblinText(Goblin2.name)} [darkred]Health[/] :[darkred] {Goblin2.health}[/]|<");
                                 Goblin2.TakeDamage(player);
                                 break;
 
                         }
                         string playerchoice2 = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
-                                .Title($"You stand face to face with {Goblin2.name}. You try to negotiate about keeping peace but {Goblin2.name} denies and tries to go in for an attack, " +
-                                       $"so the only option you have is to end this fight by swinging your {Edgeblade.name} at the enemy")
+                                .Title($"{Textcolor.NormalText("You stand face to face with")}{Textcolor.GoblinText(Goblin2.name)}{Textcolor.NormalText("You try to negotiate about keeping peace but")}{Textcolor.GoblinText(Goblin2.name)}{Textcolor.NormalText("denies and tries to go in for an attack, ")}" +
+                                       $"{Textcolor.NormalText("so the only option you have is to end this fight by swinging your ")}{Textcolor.WeaponText(Edgeblade.name)}{Textcolor.NormalText("at the enemy")}")
                                 .PageSize(3)
                                 .AddChoices(new[] {
                                     "Attack",""
@@ -180,6 +188,8 @@ namespace SpectreRPG.Game
                         }
                     }
                 }
+
+                isFighting = false;
                 AnsiConsole.Markup("");
                 Console.ReadLine();
                 player.GainExperience(100);
@@ -219,7 +229,7 @@ namespace SpectreRPG.Game
                     }));
             switch (playerChoice)
             {
-                case "Introduce yourself":
+                case "Introduce yourself.":
                     Introduction(player);
                     break;
                 case "Ask about the Elven Camp":
@@ -234,7 +244,12 @@ namespace SpectreRPG.Game
 
         public void Introduction(Player player)
         {
-            AnsiConsole.Markup("");
+            AnsiConsole.Clear();
+            AnsiConsole.Markup($"You introduce yourself to the elf as {player.name}, a {player.role} on a quest.");
+            AnsiConsole.Markup("The elf, Legolas, welcomes you and then presents you with a challenge:");
+            Console.ReadLine();
+            ScrambleGame(player);
+
         }
         public void Camp(Player player)
         {
@@ -242,6 +257,40 @@ namespace SpectreRPG.Game
         }
         public void ScrambleGame(Player player)
         {
+            AnsiConsole.Markup("I entrust you with a vital mission: decipher a key word that unlocks access to an enemy base, where my friend is currently held captive.");
+            AnsiConsole.Markup("The word you need to decrypt is crucial for freeing my friend.");
+            AnsiConsole.Markup("Generous rewards await you upon the successful completion of this mission.");
+            Minigame.Scramble("Trapped");
+            AnsiConsole.WriteLine();
+
+            bool isCorrect = false;
+
+            while (!isCorrect)
+            {
+                TextPos.Center("Scramble");
+                string word = AnsiConsole.Prompt(new TextPrompt<string>("")
+                    .PromptStyle("seagreen3"));
+
+                if (word == "Trapped")
+                {
+                    isCorrect = true;
+                    Console.Clear();
+                    AnsiConsole.Markup("[green]Correct[/]");
+                    AnsiConsole.WriteLine();
+
+                }
+                else
+                {
+                    Console.Clear();
+                    AnsiConsole.Markup("[red]Nu uh[/]");
+                    AnsiConsole.WriteLine();
+
+                }
+                
+
+            }
+            AnsiConsole.WriteLine("You did it");
+            Console.ReadLine();
 
         }
     }

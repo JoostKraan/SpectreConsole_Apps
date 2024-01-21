@@ -13,6 +13,7 @@ namespace SpectreRPG.Automation
         public static string CreateStatTable(string Column1, string Column2,string row1, string row2,string row3,string row4, string row5,string row6,string row7,string row8,string row9,string row10)
         {
             var table = new Table();
+            table.Alignment(Justify.Right);
             table.AddColumn(Column1);
             table.AddColumn(Column2);
             table.AddRow(row1,row2);
@@ -22,6 +23,7 @@ namespace SpectreRPG.Automation
             table.AddRow(row9, row10);
             table.Alignment = Justify.Left;
             table.Border = TableBorder.Ascii2;
+            table.Alignment(Justify.Center);
             AnsiConsole.Write(table);
             return row1;
             

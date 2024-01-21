@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Media;
 using System.Runtime.CompilerServices;
 using Spectre.Console;
+using SpectreRPG.Automation;
 
 namespace SpectreRPG.Game
 {
@@ -41,6 +42,7 @@ namespace SpectreRPG.Game
         }
         public void TakeDamage(Player player)
         {
+            Console.Clear();
             double critMultiplier = 1.15;
             double baseDamage = (int)(player.atk * (1.0 - defense * 0.01));
             bool isCriticalHit = new Random().Next(100) < player.critChance;
@@ -55,12 +57,17 @@ namespace SpectreRPG.Game
             }
             atk = Math.Max(atk, 1);
             double damageInt = atk;
-
+           
             health -= damageInt;
             if (health <= 0)
-            {
+            {   
+                health = 0;
+                Console.Clear();
+                TextPos.Center($">|[orange3]Under Attack![/] | [red]Target[/] : {Textcolor.GoblinText(name)} [darkred]Health[/] :[darkred] {health}[/]|<");
                 Console.WriteLine($"The {name} has been defeated!");
             }
+
+           
             else
             {
                 if (isCriticalHit)
