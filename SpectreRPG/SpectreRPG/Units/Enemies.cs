@@ -63,7 +63,7 @@ namespace SpectreRPG.Game
             {   
                 health = 0;
                 Console.Clear();
-                TextPos.Center($">|[orange3]Under Attack![/] | [red]Target[/] : {Textcolor.GoblinText(name)} [darkred]Health[/] :[darkred] {health}[/]|<");
+                TextPos.Center($"{Textcolor.HeaderText($">|[orange3]Under Attack![/] | [red]Target[/] : {Textcolor.EnemyText(name)} [darkred]Health[/] :[darkred] {health}[/]|<")}");
                 Console.WriteLine($"The {name} has been defeated!");
             }
 

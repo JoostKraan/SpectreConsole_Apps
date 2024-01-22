@@ -22,10 +22,7 @@ namespace SpectreRPG.Game
                 chars[j] = temp;
             }
 
-            // Use the shuffled chars array, not the original word
             AnsiConsole.Markup("This is the word : " + new string(chars));
-
-            // Return the shuffled word
             return new string(chars);
         }
 

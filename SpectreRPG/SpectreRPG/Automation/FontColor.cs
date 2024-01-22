@@ -19,7 +19,8 @@ namespace SpectreRPG.Game
         internal static string Titan => "[bold grey27]";
         internal static string Rogue => "[bold chartreuse3]";
         internal static string Warlock => "[bold blueviolet]";
-        internal static string Goblin => "[green]";
+        internal static string Enemy => "[green]";
+        internal static string Header => "[orange3]";
         public static string NormalText(string text) => $"{Seagreen} {text}[/]";
         public static string WeaponText(string text) => $"{Weapon} {text}[/]";
         public static string NameText(string text) => $"{Blue} {text}[/]";
@@ -30,7 +31,8 @@ namespace SpectreRPG.Game
         public static string DefenseText(string text) => $"{Defense} {text}[/]";
         public static string DodgeText(string text) => $"{Dodge} {text}[/]";
         public static string XpText(string text) => $"{Xp} {text}[/]";
-        public static string GoblinText(string text) => $"{Goblin} {text}[/]";
+        public static string EnemyText(string text) => $"{Enemy} {text}[/]";
+        public static string HeaderText(string text) => $"{Header} {text}[/]";
 
 
 

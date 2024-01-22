@@ -18,11 +18,12 @@ namespace SpectreRPG.Game
         public int experience;
         public int dodge;
         public int critChance;
+        public string race;
         public Inventory inventory;
        
 
         public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,
-            int dodge, int level,Inventory inventory)
+            int dodge, int level,Inventory inventory,string race)
         {
             this.name = name;
             this.health = health;
@@ -34,6 +35,7 @@ namespace SpectreRPG.Game
             this.critChance = critChance;
             this.level = level;
             this.inventory = inventory;
+            this.race = race;
 
 
         }
@@ -77,29 +79,13 @@ namespace SpectreRPG.Game
 
         public void ShowStats()
         {
-            AnsiConsole.Markup($"{Textcolor.NormalText("Showing stats....")}");
-            Console.WriteLine();
-            Console.WriteLine();
-            if (role == "[bold grey27]Titan[/]")
-            {
-                TextPos.CenterText();
-                AnsiConsole.Markup(
-                    $"{Textcolor.NormalText("As a")}{Textcolor.TitanText(role)}{Textcolor.NormalText("these are your stats currently")}");
-            }
+            Console.Clear();
+            TextPos.Center($"{Textcolor.HeaderText("Profile")}");
 
-            if (role == "[bold chartreuse3]Rogue[/]")
-            {
                 TextPos.CenterText();
                 AnsiConsole.Markup(
-                    $"{Textcolor.NormalText("As a")}{Textcolor.RogueText(role)}{Textcolor.NormalText("these are your stats currently")}");
-            }
+                    $"{Textcolor.NormalText("You are")}{Textcolor.NameText(name)}{Textcolor.NormalText($"the {race} ")}{role}");
 
-            if (role == "[bold blueviolet]Warlock[/]")
-            {
-                TextPos.CenterText();
-                AnsiConsole.Markup(
-                    $"{Textcolor.NormalText("As a")}{Textcolor.WarlockText($"{role}")}{Textcolor.NormalText("these are your stats currently")}");
-            }
             Console.WriteLine();
             Console.WriteLine();
             Tables.CreateStatTable("[italic blue]Stats[/]", "[italic blue]Value[/]", "[red]HP[/]", $"[red]{health}[/]", "[darkorange]Strenght[/]", $"[darkorange]{atk}[/]", "[grey]Defense[/]", $"[grey]{defense}[/]", "[purple]XP[/]", $"[purple]{experience}[/]", "[yellow]Dodge[/]", $"[yellow]{dodge}[/]");
@@ -121,25 +107,23 @@ namespace SpectreRPG.Game
         {
             experience += amount;
             Console.WriteLine();
-            AnsiConsole.Markup($"[seagreen3]Gained[/][purple] {amount} XP![/]");
+            AnsiConsole.Markup($"{Textcolor.NormalText("Gained")} {Textcolor.XpText($"{amount} XP")}");
             Console.WriteLine();
             if (experience >= XpToNextLevel)
             {
                 LevelUp();
             }
-
         }
-
         public void LevelUp()
         {
             {
                 level++;
-                AnsiConsole.Markup($"[seagreen3]Congratulations! You have reached level : [/][purple]{level}[/]");
+                AnsiConsole.Markup($"{Textcolor.NormalText("Congratulations! You have reached level : ")}{Textcolor.XpText($"{level}")}");
                 int remainingExperience = Math.Max(0, experience - XpToNextLevel);
                 experience -= XpToNextLevel;
                 XpToNextLevel = (int)(XpToNextLevel * 1.25);
                 Console.WriteLine();
-                AnsiConsole.Markup($"[seagreen3]Experience required for the next level : [/][purple]{XpToNextLevel}[/][seagreen3], Current experience :[/][purple] {remainingExperience}[/]");
+                AnsiConsole.Markup($"{Textcolor.NormalText("Experience required for the next level : ")}{Textcolor.XpText($"{XpToNextLevel} XP")}{Textcolor.NormalText("Current experience :")}{Textcolor.XpText($"{remainingExperience} XP")}");
             }
         }
         public void Dodge(Enemies enemy, Player player)
@@ -154,10 +138,10 @@ namespace SpectreRPG.Game
                 isDodged = true;
 
             if (isDodged)
-                AnsiConsole.Markup($"You have dodged {enemy.name} and escaped his attack by a hair!");
+                AnsiConsole.Markup($"{Textcolor.NormalText("You have dodged ")}{Textcolor.EnemyText($"{enemy.name}")}{Textcolor.NormalText("and escaped his attack by a hair!")}");
             else
             {
-                AnsiConsole.Markup($"Your attempt in dodging {enemy.name} failed! He hit you and you took some damage...");
+                AnsiConsole.Markup($"{Textcolor.NormalText("You have dodged ")} {Textcolor.EnemyText($"{enemy.name}")} {Textcolor.NormalText("failed! He hit you and you took some damage...")}");
                 player.TakeDamage(enemy);
             }
 
@@ -168,5 +152,12 @@ namespace SpectreRPG.Game
             AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
 
         }
+    }
+    public static class Roles
+    {
+        public const string Titan = "[bold grey27]Titan[/]";
+        public const string Rogue = "[bold chartreuse3]Rogue[/]";
+        public const string Warlock = "[bold blueviolet]Warlock[/]";
+        public const string Back = "> [underline red]Back[/]";
     }
 }

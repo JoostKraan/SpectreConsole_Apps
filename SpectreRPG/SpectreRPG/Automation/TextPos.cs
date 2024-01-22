@@ -4,9 +4,6 @@ namespace SpectreRPG.Automation
 {
     public class TextPos
     {
-
-
-
         public static string Center(string input)
         {
             var rule = new Rule(input);
@@ -24,7 +21,7 @@ namespace SpectreRPG.Automation
         {
             var rule = new Rule(input);
             rule.Justification = Justify.Right;
-            AnsiConsole.Write($"$[orange3]{rule}[/]");
+            AnsiConsole.Write($"{rule}");
             return input;
         }
 
