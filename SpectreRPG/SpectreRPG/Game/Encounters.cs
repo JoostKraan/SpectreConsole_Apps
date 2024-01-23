@@ -234,11 +234,11 @@ namespace SpectreRPG.Game
                 case "Introduce yourself.":
                     Introduction(player);
                     break;
-                case "Ask about the Elven Camp":
+                case "Ask about the Elven Camp.":
                     Camp(player);
                     break;
                 case "Offer assistance":
-                    minigames.ScrambleGame(player,hasplayed);
+                    //minigame.PlayScrambleGame();
                     break;
             }
             Console.ReadLine();
@@ -250,30 +250,82 @@ namespace SpectreRPG.Game
             AnsiConsole.Markup($"You introduce yourself to the elf as {player.name}, a {player.role} on a quest.");
             AnsiConsole.Markup("The elf, Legolos, welcomes you and then presents you with a challenge:");
             Console.ReadLine();
-            Console.Clear();
-            minigames.ScrambleGame(player,hasplayed);
+            ScrambleGame(player);
             Camp(player);
 
         }
-        public void Camp(Player player)
+        public string Scramble(string word)
         {
-            if (hasplayed)
+            char[] chars = word.ToCharArray();
+            Random random = new Random();
+
+            for (int i = chars.Length - 1; i > 0; i--)
             {
-                AnsiConsole.Markup($"{Textcolor.NormalText("Thanks for solving my puzzle!")}");
-                AnsiConsole.Markup($"{Textcolor.NormalText("I couldn't have done it without you.")}");
-                AnsiConsole.Markup($"{Textcolor.NormalText("Now that we know the code, I can help my friend in the trapped base and return him to safety here in our camp")}");
+                int j = random.Next(0, i + 1);
+                char temp = chars[i];
+                chars[i] = chars[j];
+                chars[j] = temp;
             }
-            if(!hasplayed)
+
+            AnsiConsole.Markup("This is the word : " + new string(chars));
+            return new string(chars);
+        }
+
+        public bool isCorrect;
+        public void ScrambleGame(Player player)
+        {
+            AnsiConsole.Markup("I entrust you with a vital mission: decipher a key word that unlocks access to an enemy base, where my friend is currently held captive.");
+            AnsiConsole.Markup("The word you need to decrypt is crucial for freeing my friend.");
+            AnsiConsole.Markup("Generous rewards await you upon the successful completion of this mission.");
+            Minigame.Scramble("Trapped");
+            AnsiConsole.WriteLine();
+
+            isCorrect = false;
+
+            while (!isCorrect)
             {
-                AnsiConsole.Markup($"{Textcolor.NormalText("Welcome to my camp")}");
+                TextPos.Center("Scramble");
+                string word = AnsiConsole.Prompt(new TextPrompt<string>("")
+                    .PromptStyle("seagreen3"));
+
+                if (word == "Trapped")
+                {
+                    isCorrect = true;
+                    Console.Clear();
+                    AnsiConsole.Markup("[green]Correct[/]");
+                    AnsiConsole.WriteLine();
+
+                }
+                else
+                {
+                    Console.Clear();
+                    AnsiConsole.Markup("[red]Nu uh[/]");
+                    AnsiConsole.WriteLine();
+
+                }
+
+
             }
-            Console.Clear();
-            AnsiConsole.Markup("");
-            Console.ReadLine();
         }
 
 
+        public void Camp(Player player)
+        {
+            if (isCorrect)
+            {
+                AnsiConsole.Markup($"{Textcolor.NormalText($"Thanks for solving my puzzle!")}");
+                AnsiConsole.Markup($"{Textcolor.NormalText($"I couldn't have done it without you.")}");
+                AnsiConsole.Markup($"{Textcolor.NormalText($"Now that we know the code, I can help my friend in the trapped base and return him to safety here in our camp")}");
+            }
+            if (!isCorrect)
+            {
+                AnsiConsole.Markup($"{Textcolor.NormalText($"{Textcolor.NormalText(($"{Textcolor.NameText(("Legolas"))} Welcomes you to the camp"))}")}");
+                AnsiConsole.Markup($"{Textcolor.NormalText($"{Textcolor.NormalText(($"Ive got a big problem and I need your help {Textcolor.NameText(player.name)}"))}")}");
 
+            }
+            AnsiConsole.Markup("");
+            Console.ReadLine();
+        }
     }
 }
 
