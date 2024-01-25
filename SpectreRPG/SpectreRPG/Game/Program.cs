@@ -8,8 +8,8 @@ namespace SpectreRPG.Game
         SoundPlayer player;
         static void Main(string[] args)
         {
-            //System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"D:\Repositories\SpectreConsole_Apps\SpectreRPG\SpectreRPG\bin\Debug\net6.0\fart.wav");
-            //player.Play();
+            //System.Media.So\fart.wav");
+            //player.Play();undPlayer player = new System.Media.SoundPlayer(@"D:\Repositories\SpectreConsole_Apps\SpectreRPG\SpectreRPG\bin\Debug\net6.0
             Game game = new Game();
             game.InputPlayerInfo();
 
