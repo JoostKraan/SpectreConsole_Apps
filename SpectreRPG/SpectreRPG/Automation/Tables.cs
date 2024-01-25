@@ -29,11 +29,6 @@ namespace SpectreRPG.Automation
             
         }
 
-        public static string CreateAttackTable(string sex)
-        {
-            var table = new Table();
-            return sex;
-        }
     
     }
 }

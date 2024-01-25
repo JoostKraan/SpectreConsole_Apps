@@ -1,0 +1,5 @@
+Put all dialogue in a dedicated class/dictionary.
+Unitbase class instead of having seperate class for every unit.
+focus on all logic first and then make visual improvements.
+Organize everything from day 1 .
+Make a planning or an uml.

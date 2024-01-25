@@ -12,27 +12,20 @@ namespace SpectreRPG.Game
         Minigame minigames = new Minigame();
         Enemies Goblin1 = new Enemies("Gorlock", 5, 3, 1, 1, 5);
         Enemies Goblin2 = new Enemies("Bingus", 5, 3, 1, 1, 5);
+        Enemies Cyborg = new Enemies("Cyborg", 25, 10, 1, 1, 5);
         Weapons Edgeblade = new Weapons("EdgeBlade", 10, 0, 0, 0, 2, 95);
-        Inventory playerinventory;
         public void StartingEncounter(Player player)
         {
             Console.Clear();
             TextPos.Center($"{Textcolor.HeaderText("Story Intro")}");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NormalText("In the vast expanse of a distant galaxy, your adventure begins as you stumble upon a long-forgotten relic, ")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.WeaponText("the Ancient EdgeBlade")}{Textcolor.NormalText("This legendary weapon, steeped in the history of Eldoria ,")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NormalText("is said to hold extraordinary power. As you grasp the hilt of the")}{Textcolor.WeaponText("EdgeBlade ")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NormalText("you feel a surge of energy coursing through you, marking the start of a remarkable journey.")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NormalText("As you traverse the ancient paths, you encounter a wise old man named")}{Textcolor.NameText("Aric the Wanderer")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NormalText("With a knowing gaze, he senses the aura of the ")}{Textcolor.WeaponText("EdgeBlade")}{Textcolor.NormalText("and approaches you.")}");
-            Console.WriteLine();
             AnsiConsole.MarkupLine($"{Textcolor.NameText("Aric")}{Textcolor.NormalText("reveals that he has been awaiting the arrival of a true adventurer, marked by the legendary weapon.")}");
-            Console.WriteLine();
             Console.ReadLine();
             Console.Clear();
             AnsiConsole.MarkupLine("[seagreen3]You've acquired a new Weapon![/]");
@@ -102,11 +95,11 @@ namespace SpectreRPG.Game
                 Environment.Exit(0);
 
             }
-            AttackEncounter(player, playerinventory);
+            AttackEncounter(player);
             Console.Clear();
             Console.ReadLine();
         }
-        public void AttackEncounter(Player player, Inventory playerinventory)
+        public void AttackEncounter(Player player)
         {
             Console.Clear();
             TextPos.Center($"{Textcolor.HeaderText("Under Attack!")}");
@@ -119,7 +112,7 @@ namespace SpectreRPG.Game
 
             string Attack1 = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                .Title("Gorlock starts running towards you in an attempt to attack you and steal all of your valuables")
+                .Title(Textcolor.NormalText($"{Textcolor.EnemyText("Gorlock")} starts running towards you in an attempt to attack you and steal all of your valuables"))
                 .PageSize(3)
                 .AddChoices(new[] {
                     "Flee","Fight back"
@@ -146,14 +139,16 @@ namespace SpectreRPG.Game
                             Goblin1.TakeDamage(player);
                             break;
                         default:
-                            AttackEncounter(player, playerinventory);
+                            AttackEncounter(player);
                             break;
                     }
                     if (Goblin1.health <= 0)
                     {
-                        bool hasdodged = false;
+
+                        Console.Clear();
+                        TextPos.Center($"{Textcolor.HeaderText($">|[orange3]Battle![/]| [red]Target[/] : {Textcolor.EnemyText(Goblin2.name)} [darkred]Health[/] :[darkred] {Goblin2.health}[/]|<")}");
                         AnsiConsole.MarkupLine($"{Textcolor.NormalText("As ")}[green]Bingus[/]{Textcolor.NormalText("the goblin watches as you hit his companion. He falls down and dies")}");
-                        AnsiConsole.MarkupLine($".{Textcolor.EnemyText("Bingus")}{Textcolor.NormalText("the goblin charges at you with rage")}");
+                        AnsiConsole.MarkupLine($"{Textcolor.EnemyText("Bingus")}{Textcolor.NormalText("the Goblin charges at you with rage")}");
                         string playerchoice1 = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
                                 .Title("")
@@ -164,8 +159,8 @@ namespace SpectreRPG.Game
 
                         switch (playerchoice1)
                         {
+
                             case "Dodge":
-                                hasdodged = true;
                                 player.Dodge(Goblin2, player);
                                 break;
                             case "Attack":
@@ -214,10 +209,10 @@ namespace SpectreRPG.Game
         {
             AnsiConsole.Clear();
             TextPos.Center($"{Textcolor.HeaderText("Mission")}");
-            AnsiConsole.MarkupLine("After that battle you can finally continue your adventure to the Elven Camp");
-            AnsiConsole.MarkupLine("You succesfully reached the camp and look around for someone to talk to...");
-            AnsiConsole.MarkupLine("You see a strange looking Elf standing there, he looks like he has been through a lot");
-            AnsiConsole.MarkupLine("You walk up to the elf he looks at you with a confused look on his face");
+            AnsiConsole.MarkupLine(Textcolor.NormalText("After that battle you can finally continue your adventure to the Elven Camp"));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You succesfully reached the camp and look around for someone to talk to..."));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You see a strange looking Elf standing there, he looks like he has been through a lot"));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You walk up to the elf he looks at you with a confused look on his face"));
 
             string playerChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -227,7 +222,6 @@ namespace SpectreRPG.Game
                     {
                         "Introduce yourself.",
                         "Ask about the Elven Camp.",
-                        "Offer assistance."
                     }));
             switch (playerChoice)
             {
@@ -237,9 +231,6 @@ namespace SpectreRPG.Game
                 case "Ask about the Elven Camp.":
                     Camp(player);
                     break;
-                case "Offer assistance":
-                    //minigame.PlayScrambleGame();
-                    break;
             }
             Console.ReadLine();
         }
@@ -247,8 +238,8 @@ namespace SpectreRPG.Game
         public void Introduction(Player player)
         {
             AnsiConsole.Clear();
-            AnsiConsole.MarkupLine($"You introduce yourself to the elf as {player.name}, a {player.role} on a quest.");
-            AnsiConsole.MarkupLine("The elf, Legolos, welcomes you and then presents you with a challenge:");
+            AnsiConsole.MarkupLine(Textcolor.NormalText($"You introduce yourself to the elf as {Textcolor.NameText(player.name)}, a {player.role} on a quest. "));
+            AnsiConsole.MarkupLine(Textcolor.NormalText($"The elf, {Textcolor.NameText("Legolos")}, welcomes you and then presents you with a challenge:"));
             Console.ReadLine();
             ScrambleGame(player);
             Camp(player);
@@ -274,9 +265,9 @@ namespace SpectreRPG.Game
         public bool isCorrect;
         public void ScrambleGame(Player player)
         {
-            AnsiConsole.MarkupLine("I entrust you with a vital mission: decipher a key word that unlocks access to an enemy base, where my friend is currently held captive.");
-            AnsiConsole.MarkupLine("The word you need to decrypt is crucial for freeing my friend.");
-            AnsiConsole.MarkupLine("Generous rewards await you upon the successful completion of this mission.");
+            AnsiConsole.MarkupLine(Textcolor.NormalText("I entrust you with a vital mission: decipher a key word that unlocks access to an enemy base, where my friend is currently held captive."));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("The word you need to decrypt is crucial for freeing my friend."));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("Generous rewards await you upon the successful completion of this mission."));
             Minigame.Scramble("Trapped");
             AnsiConsole.WriteLine();
 
@@ -326,11 +317,11 @@ namespace SpectreRPG.Game
         public void EnteringBase(Player player)
         {
             AnsiConsole.MarkupLine(Textcolor.NormalText("As you got your quest to rescue Legolas's friend you head south to find the enemy base."));
-            AnsiConsole.MarkupLine(Textcolor.NormalText("You get closer to your destination and see a massive prison with one gate infront of you"));
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You get closer to your destination and see a massive prison with a gate infront of you"));
             AnsiConsole.MarkupLine(Textcolor.NormalText("You try to sneak through a hole in the fence next to the gate to get inside the base,"));
             AnsiConsole.MarkupLine(Textcolor.NormalText("but while you are going through the hole you hear heavy footsteps coming towards you"));
-            AnsiConsole.MarkupLine(Textcolor.NormalText($"You look up and you stand face to face with a big {Textcolor.EnemyText("Cyborg")}"));
-            AnsiConsole.MarkupLine(Textcolor.NormalText($"The {Textcolor.EnemyText("Cyborg")} looks at your in your eyes"));
+            AnsiConsole.MarkupLine(Textcolor.NormalText($"You look up and you stand face to face with a big{Textcolor.EnemyText("Cyborg")}"));
+            AnsiConsole.MarkupLine(Textcolor.NormalText($"The{Textcolor.EnemyText("Cyborg")} looks at your in your eyes"));
             AnsiConsole.MarkupLine(Textcolor.NormalText($"He tells you that he could kill you right now unless you solve his riddles"));
             AnsiConsole.MarkupLine("");
 
@@ -344,16 +335,16 @@ namespace SpectreRPG.Game
                             "Accept the offer","Decline the offer"
                         }
                     ));
-                if (question == "Accept the offer")
+            if (question == "Accept the offer")
             {
                 Console.Clear();
-                AnsiConsole.MarkupLine($"You have accepted the offer and the {Textcolor.EnemyText("Cyborg")} starts to read his riddles.");
+                AnsiConsole.MarkupLine(Textcolor.NormalText($"You have accepted the offer and the {Textcolor.EnemyText("Cyborg")} starts to read his riddles."));
                 Riddle(player);
             }
             if (question == "Decline the offer")
             {
                 Console.Clear();
-                AnsiConsole.MarkupLine("You Decline the offer");
+                AnsiConsole.MarkupLine("[green]You Decline the offer[/]");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
@@ -361,14 +352,15 @@ namespace SpectreRPG.Game
         bool riddlesCompleted = false;
         public void Riddle(Player player)
         {
-            while (!riddlesCompleted)
+            while (!riddlesCompleted || Cyborg.health <0)
             {
                 Console.Clear();
-                AnsiConsole.MarkupLine("I dance with flames and flow with grace,");
-                AnsiConsole.MarkupLine("A force of nature, in every place.");
-                AnsiConsole.MarkupLine("Born of heat, my power is vast,");
-                AnsiConsole.MarkupLine("Guess my name, break the spell, and be fast.");
-                AnsiConsole.MarkupLine("What am I?");
+                TextPos.Center($"{Textcolor.HeaderText($">|[orange3]Battle![/]| [red]Target[/] : {Textcolor.EnemyText(Cyborg.name)} [darkred]Health[/] :[darkred] {Cyborg.health}[/]|<")}");
+                AnsiConsole.MarkupLine("[orange3]I dance with flames and flow with grace,[/]");
+                AnsiConsole.MarkupLine("[orange3]A force of nature, in every place.[/]");
+                AnsiConsole.MarkupLine("[orange3]Born of heat, my power is vast,[/]");
+                AnsiConsole.MarkupLine("[orange3]Guess my name, break the spell, and be fast.[/]");
+                AnsiConsole.MarkupLine("[bold blue]What am I?[/]");
                 string riddle1 = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("")
@@ -382,25 +374,67 @@ namespace SpectreRPG.Game
                 if (riddle1 == "Lava")
                 {
                     AnsiConsole.MarkupLine("[red]False[/]");
-                    player.TakeDamage(30);
+                    player.TakeDamage(Cyborg);
                     Console.ReadLine();
                 }
                 if (riddle1 == "Fire")
                 {
                     riddlesCompleted = true;
                     AnsiConsole.MarkupLine("[green]You got that right.[/]");
+                    Cyborg.TakeDamage(player);
                     Console.ReadLine();
                 }
-                if(riddle1 == "Magma")
+                if (riddle1 == "Magma")
                 {
                     AnsiConsole.MarkupLine("[red]False[/]");
-                    //player.TakeDamage();
+                    player.TakeDamage(Cyborg);
                     Console.ReadLine();
                 }
+                Console.Clear();
+                TextPos.Center($"{Textcolor.HeaderText($">|[orange3]Battle![/]| [red]Target[/] : {Textcolor.EnemyText(Cyborg.name)} [darkred]Health[/] :[darkred] {Cyborg.health}[/]|<")}");
+                AnsiConsole.MarkupLine("[orange3]I'm a mystery in the dark of night,[/]");
+                AnsiConsole.MarkupLine("[orange3]A shimmering orb, a celestial light.[/]");
+                AnsiConsole.MarkupLine("[orange3]With phases that wax and wane,[/]");
+                AnsiConsole.MarkupLine("[orange3]In the sky, my secrets remain.[/]");
+
+                string riddle2 = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("")
+                        .PageSize(3)
+                        .AddChoices(new[]
+                            {
+                                "Star","Galaxy","Moon"
+                            }
+                        ));
+
+                if (riddle2 == "Star")
+                {
+                    AnsiConsole.MarkupLine("[red]False[/]");
+                    player.TakeDamage(Cyborg);
+                    Console.ReadLine();
+                }
+                if (riddle2 == "Galaxy")
+                {
+                    player.TakeDamage(Cyborg);
+                    AnsiConsole.MarkupLine("[red]False[/]");
+                    Console.ReadLine();
+                }
+                if (riddle2 == "Moon")
+                {
+                    riddlesCompleted = true;
+                    AnsiConsole.MarkupLine("[green]You got that right.... Once again[/]");
+                    Cyborg.TakeDamage(player);
+                    Console.ReadLine();
+                }
+
+
+
             }
-            AnsiConsole.MarkupLine("Yes");
-            Console.ReadLine();
+            player.restart();
         }
+
+
     }
 }
+
 

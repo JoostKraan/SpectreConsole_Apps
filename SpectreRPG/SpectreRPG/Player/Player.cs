@@ -20,10 +20,10 @@ namespace SpectreRPG.Game
         public int critChance;
         public string race;
         public Inventory inventory;
-       
+
 
         public Player(string name, int health, int atk, string role, int experience, int defense, int critChance,
-            int dodge, int level,Inventory inventory,string race)
+            int dodge, int level, Inventory inventory, string race)
         {
             this.name = name;
             this.health = health;
@@ -72,8 +72,13 @@ namespace SpectreRPG.Game
                 }
                 else
                 {
-                    Console.WriteLine($"You take {damageInt} damage. Remaining health: {health}");
+                    AnsiConsole.MarkupLine(Textcolor.NormalText($"You take {Textcolor.EnemyText($"{damageInt}")} damage. Remaining health: {health}"));
                 }
+            }
+
+            if (this.health < 0)
+            {
+                EndDeathMenu();
             }
         }
 
@@ -82,9 +87,9 @@ namespace SpectreRPG.Game
             Console.Clear();
             TextPos.Center($"{Textcolor.HeaderText("Profile")}");
 
-                TextPos.CenterText();
-                AnsiConsole.Markup(
-                    $"{Textcolor.NormalText("You are")}{Textcolor.NameText(name)}{Textcolor.NormalText($"the {race} ")}{role}");
+            TextPos.CenterText();
+            AnsiConsole.Markup(
+                $"{Textcolor.NormalText("You are")}{Textcolor.NameText(name)}{Textcolor.NormalText($"the {race} ")}{role}");
 
             Console.WriteLine();
             Console.WriteLine();
@@ -152,12 +157,68 @@ namespace SpectreRPG.Game
             AnsiConsole.Markup($"{Textcolor.NormalText("You have acquired the")}{Textcolor.WeaponText(weapon.name)}");
 
         }
+
+        public void EndDeathMenu()
+        {
+            Console.Clear();
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You lost the game"));
+            string Endgame = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title(Textcolor.NormalText("Sadly your journey ends here..."))
+                    .PageSize(3)
+                    .AddChoices(new[]
+                    {
+                        "Restart Completely",
+                        "Exit game"
+                    }));
+            if (Endgame == "Restart Completely")
+            {
+                Console.Clear();
+                Game game = new Game();
+                game.InputPlayerInfo();
+            }
+
+            if (Endgame == "Exit game")
+            {
+                Environment.Exit(0);
+            }
+
+        }
+
+        public void restart()
+        {
+            Console.Clear();
+            AnsiConsole.MarkupLine(Textcolor.NormalText("You Won"));
+            string Endgame = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title(Textcolor.NormalText("More content.. Work in progress"))
+                    .PageSize(3)
+                    .AddChoices(new[]
+                    {
+                        "Restart Completely",
+                        "Exit game"
+                    }));
+            if (Endgame == "Restart Completely")
+            {
+                Console.Clear();
+                Game game = new Game();
+                game.InputPlayerInfo();
+            }
+
+            if (Endgame == "Exit game")
+            {
+                Environment.Exit(0);
+            }
+
+        }
     }
-    public static class Roles
-    {
-        public const string Titan = "[bold grey27]Titan[/]";
-        public const string Rogue = "[bold chartreuse3]Rogue[/]";
-        public const string Warlock = "[bold blueviolet]Warlock[/]";
-        public const string Back = "> [underline red]Back[/]";
-    }
+
+
+}
+public static class Roles
+{
+    public const string Titan = "[bold grey27]Titan[/]";
+    public const string Rogue = "[bold chartreuse3]Rogue[/]";
+    public const string Warlock = "[bold blueviolet]Warlock[/]";
+    public const string Back = "> [underline red]Back[/]";
 }

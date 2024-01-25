@@ -27,9 +27,8 @@ namespace SpectreRPG.Game
                     .Title("")
                     .PageSize(4)
                     .AddChoices(new[] {
-                        "[bold grey27]Black[/]","[bold blueviolet]White[/]","[bold chartreuse3]Bald[/]","> [underline red]Back[/]"
+                        "[bold grey27]Selenite[/]","[bold blueviolet]Celestial[/]","[bold chartreuse3]Xenolith[/]","> [underline red]Back[/]"
                     }));
-            Console.Clear();
         }
         public string InputClass()
         {
@@ -41,7 +40,6 @@ namespace SpectreRPG.Game
                     .AddChoices(new[] {
                         "[bold grey27]Titan[/]","[bold blueviolet]Warlock[/]","[bold chartreuse3]Rogue[/]","> [underline red]Back[/]"
                     }));
-            Console.Clear();
         }
         public void InputPlayerInfo()
         {
@@ -55,17 +53,17 @@ namespace SpectreRPG.Game
             {
                 case Roles.Titan:
                     TextPos.CenterText();
-                    player = new Player(name, 12, 5, $"[bold grey27]Titan[/]", 0, 0, 2, 1, 0, new Inventory(), race);
+                    player = new Player(name, 35, 5, $"[bold grey27]Titan[/]", 0, 0, 2, 1, 0, new Inventory(), race);
                     AnsiConsole.Write(new Markup($"[seagreen3]You chose [/][bold grey27]{roles}[/]"));
                     player.ShowStats();
                     break;
                 case Roles.Rogue:
-                    player = new Player(name, 10, 3, "[bold chartreuse3]Rogue[/]", 0, 0, 5, 1, 0, new Inventory(), race);
+                    player = new Player(name, 25, 3, "[bold chartreuse3]Rogue[/]", 0, 0, 5, 1, 0, new Inventory(), race);
                     AnsiConsole.Write(new Markup($"{Textcolor.NormalText("You chose")}{Textcolor.RogueText(roles)}"));
                     player.ShowStats();
                     break;
                 case Roles.Warlock:
-                    player = new Player(name, 8, 8, "[bold blueviolet]Warlock[/]", 0, 0, 3, 1, 0, new Inventory(), race);
+                    player = new Player(name, 28, 8, "[bold blueviolet]Warlock[/]", 0, 0, 3, 1, 0, new Inventory(), race);
                     AnsiConsole.Write(new Markup($"{Textcolor.NormalText("You chose")}{Textcolor.WarlockText(roles)}"));
                     player.ShowStats();
                     break;

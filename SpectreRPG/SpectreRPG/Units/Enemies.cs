@@ -64,22 +64,20 @@ namespace SpectreRPG.Game
                 health = 0;
                 Console.Clear();
                 TextPos.Center($"{Textcolor.HeaderText($">|[orange3]Under Attack![/] | [red]Target[/] : {Textcolor.EnemyText(name)} [darkred]Health[/] :[darkred] {health}[/]|<")}");
-                Console.WriteLine($"The {name} has been defeated!");
+                AnsiConsole.MarkupLine(Textcolor.NormalText($"The {Textcolor.NameText(name)} has been defeated!"));
             }
 
-           
-            else
-            {
+            
                 if (isCriticalHit)
                 {
-                    Console.WriteLine($"Critical Hit! The {name} takes {damageInt} damage. Remaining health: {health}");
+                    AnsiConsole.MarkupLine(Textcolor.NormalText($"Critical Hit! The {Textcolor.NameText(name)} takes {Textcolor.EnemyText($"{damageInt}")} damage. Remainging health: {health}"));
                 }
                 else
                 {
-                    Console.WriteLine($"The {name} takes {damageInt} damage. Remaining health: {health}");
+                    AnsiConsole.MarkupLine(Textcolor.NormalText($"The {name} takes {damageInt} damage. Remaining health {health}"));
                 }
-            }
-            Console.WriteLine($"you did {damageInt} damage");
+            
+            //AnsiConsole.MarkupLine(Textcolor.NormalText($"you did {Textcolor.EnemyText($"{damageInt}")} damage"));
             if (health <= 0)
             {
                 health = 0;
