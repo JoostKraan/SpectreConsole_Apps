@@ -289,7 +289,6 @@ namespace SpectreRPG.Game
                 }
                 else
                 {
-                    Console.Clear();
                     AnsiConsole.MarkupLine("[red]Nu uh[/]");
                     AnsiConsole.WriteLine();
                 }
@@ -346,7 +345,7 @@ namespace SpectreRPG.Game
                 Console.Clear();
                 AnsiConsole.MarkupLine("[green]You Decline the offer[/]");
                 Console.ReadLine();
-                Environment.Exit(0);
+               player.EndDeathMenu();
             }
         }
         bool riddlesCompleted = false;

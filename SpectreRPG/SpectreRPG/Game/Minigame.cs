@@ -51,7 +51,6 @@ namespace SpectreRPG.Game
                 }
                 else
                 {
-                    Console.Clear();
                     AnsiConsole.Markup("[red]Nu uh[/]");
                     AnsiConsole.WriteLine();
                 }

@@ -1,5 +1,5 @@
-Put all dialogue in a dedicated class/dictionary.
-Unitbase class instead of having seperate class for every unit.
-focus on all logic first and then make visual improvements.
-Organize everything from day 1 .
-Make a planning or an uml.
+Alle Dialogue in een dictionary zetten
+Unitbase class inplaats van 1 Class voor alles
+Focussen om eerst de logica helemaal af te maken en dan met visuele verbeteringen
+Alles beter organiseren 
+Een planning/UML maken
